@@ -1,0 +1,56 @@
+{
+  "serif.woff2": {
+    "source": "@fontsource-variable/source-serif-4@5.3.0/files/source-serif-4-latin-opsz-normal.woff2",
+    "sourceBytes": 122360,
+    "bytes": 75196,
+    "sha256": "QcLSGyerGxYXnGk7Tw+VM4W7qm2/LSu/5SHhYZcSQcQ=",
+    "weight": "400 500",
+    "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    "renamed": true
+  },
+  "inter.woff2": {
+    "source": "@fontsource-variable/inter@5.3.0/files/inter-latin-wght-normal.woff2",
+    "sourceBytes": 48256,
+    "bytes": 30756,
+    "sha256": "J00pdFSVqwPEBmXMRJdJ9M5Coh5DsGhwuqZAmSP6dVc=",
+    "weight": "400 700",
+    "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    "renamed": false
+  },
+  "mono.woff2": {
+    "source": "@fontsource-variable/jetbrains-mono@5.3.0/files/jetbrains-mono-latin-wght-normal.woff2",
+    "sourceBytes": 40404,
+    "bytes": 28708,
+    "sha256": "Uxw/bwG7MhZZa/bdV9kmbCHabwbFN+6wTxBf353ZYnI=",
+    "weight": "400 700",
+    "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    "renamed": false
+  },
+  "inter-latin-ext-extras.woff2": {
+    "source": "@fontsource-variable/inter@5.3.0/files/inter-latin-ext-wght-normal.woff2",
+    "sourceBytes": 85068,
+    "bytes": 1860,
+    "sha256": "Uo7s4dtybXEdJICp8K9hfPZP0nq+zfiyNk9KtlrLo/o=",
+    "weight": "400 700",
+    "unicodeRange": "U+0107, U+011F, U+0192",
+    "renamed": false
+  },
+  "inter-greek-extras.woff2": {
+    "source": "@fontsource-variable/inter@5.3.0/files/inter-greek-wght-normal.woff2",
+    "sourceBytes": 18996,
+    "bytes": 1164,
+    "sha256": "ylABqPOKkK1iRO+bbOHqFb8sRB8WWTw9L8HgyXO6jB8=",
+    "weight": "400 700",
+    "unicodeRange": "U+03C6",
+    "renamed": false
+  },
+  "mono-latin-ext-extras.woff2": {
+    "source": "@fontsource-variable/jetbrains-mono@5.3.0/files/jetbrains-mono-latin-ext-wght-normal.woff2",
+    "sourceBytes": 15196,
+    "bytes": 1368,
+    "sha256": "8QGAZBh7JStk3MSRcg6u3gmDpgSoeZLkndQDRYxh0w8=",
+    "weight": "400 700",
+    "unicodeRange": "U+0107, U+011F, U+0192",
+    "renamed": false
+  }
+}

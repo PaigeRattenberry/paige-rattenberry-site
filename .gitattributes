@@ -1,0 +1,11 @@
+# Normalise to LF in the repo and in every working copy. Without this, core.autocrlf=true
+# checks the tree out with CRLF on Windows and `npm run format:check` (Prettier defaults to
+# endOfLine: "lf") flags every tracked file right after a fresh clone, while CI on Linux
+# stays green.
+* text=auto eol=lf
+
+*.png binary
+*.ico binary
+*.pdf binary
+*.woff binary
+*.woff2 binary

@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # The publication test reads the whole history in the public repository.
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run typecheck
+      - name: Write the private publication terms
+        env:
+          PUBLICATION_TERMS: ${{ secrets.PUBLICATION_TERMS }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+        run: |
+          if [ -z "$PUBLICATION_TERMS" ]; then
+            # Paige's two repositories hold the secret, so a run there must have it, except a pull
+            # request from a fork, which gets no secrets. A fork's own runs never have it.
+            case "$GITHUB_REPOSITORY" in
+              PaigeRattenberry/paigewebsite | PaigeRattenberry/paige-rattenberry-site)
+                if [ "$GITHUB_EVENT_NAME" != "pull_request" ] || [ "$HEAD_REPO" = "$GITHUB_REPOSITORY" ]; then
+                  echo "::error::PUBLICATION_TERMS is empty"; exit 1
+                fi ;;
+            esac
+            # No file at all, and the test that the list exists told to skip.
+            echo "PUBLICATION_TERMS_OPTIONAL=1" >> "$GITHUB_ENV"
+            echo "::warning::PUBLICATION_TERMS is not available to this run; the private-term tests skip"
+            exit 0
+          fi
+          printf '%s\n' "$PUBLICATION_TERMS" > "$RUNNER_TEMP/publication-terms.txt"
+      - run: npm test
+        env:
+          PUBLICATION_TERMS_FILE: ${{ runner.temp }}/publication-terms.txt
+      - run: npm run build
+      # DESIGN §8: the site's own client JavaScript on / stays within 15 KB gzipped.
+      - run: npm run budget
+
+  a11y:
+    name: Accessibility (axe, both themes)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - run: npm run e2e:a11y
+      - run: npm run e2e:features
+      - uses: actions/upload-artifact@v6
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+  lighthouse:
+    name: Lighthouse (mobile)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # lighthouserc.json: five runs each of /, /projects/stimmap3d, /experience and
+      # /how-this-was-built against `next start`, mobile preset, assertions from DESIGN §5.7.
+      # Never a Vercel preview, which sends X-Robots-Tag: noindex and fails the SEO category.
+      - run: npm run lighthouse
+      # The scores themselves (lhci only logs pass or fail), also when an assertion failed.
+      - run: node scripts/lighthouse-summary.mjs
+        if: always()
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: lighthouse-reports
+          path: .lighthouseci/
+          include-hidden-files: true
+          retention-days: 7

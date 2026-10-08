@@ -1,0 +1,200 @@
+---
+# Card and page facts: resume of record (title, dates, bullets) and the PUBLIC StimMap3D
+# repository (metrics, quotes, feature list), re-read at commit
+# 0a20e810e48dca8aac1780c6478c3d1f51663989 on 2026-09-20 (Session 3b). Session 3a had read
+# them before StimMap3D's public release (S0-D). Every GitHub file link
+# below pins that one commit; a unit test keeps them in step with the repository screenshot's
+# provenance in content/assets.json.
+slug: stimmap3d
+title: StimMap3D
+tagline: Interactive 3D model of TMS coil placement and the cortical field it induces
+proof: >-
+  Independent project: a browser-based 3D visualization with a live-recomputing electric-field
+  heatmap, shipped with a Methods & Limitations page and a self-check quiz.
+year: 2026
+dates: Jun – Aug 2026
+periods:
+  - { start: "2026-06", end: "2026-08" }
+kind: project
+featured: true
+deepPage: true
+order: 1
+bullets:
+  - >-
+    Independently designed and built a browser-based, interactive 3D visualization tool modeling
+    TMS (transcranial magnetic stimulation) coil placement and induced cortical electric fields,
+    with a live-recomputing heatmap driven by coil drag, orbit, and zoom interaction — including
+    focality iso-contour bands, field-direction glyphs, and depth-dose readouts across
+    configurable targeting presets.
+  - >-
+    Built supporting UX for scientific communication (guided onboarding tour, shareable
+    deep-links, PNG export, print-ready clinician handouts, and a “Methods & Limitations” page
+    with a self-check quiz), framed as an illustrative, non-clinical model.
+skills: [typescript, claude-code, medical-imaging]
+metrics:
+  - value: "447"
+    label: app tests passing in StimMap3D's release gate
+    source: stimmap3d-repo
+    note: docs/validation.md in the public repository at commit 0a20e81, read on 2026-09-20.
+  - value: "35"
+    label: test files holding StimMap3D's app tests
+    source: stimmap3d-repo
+    note: docs/validation.md in the public repository at commit 0a20e81, read on 2026-09-20.
+  - value: "24"
+    label: production Chromium checks passing in StimMap3D's validation record
+    source: stimmap3d-repo
+    note: docs/validation.md in the public repository at commit 0a20e81, read on 2026-09-20.
+  - value: "~4–10%"
+    label: field error of an idealized dipole coil versus real spiral windings, as stated in StimMap3D's documentation
+    source: stimmap3d-repo
+    note: StimMap3D's DESIGN.md §3.2 at commit 0a20e81 attributes the range to PLOS ONE 2017.
+# StimMap3D's own wording (DESIGN §7.1); shown wherever the project appears (§3.3).
+disclaimer: Illustrative model — not for clinical use
+# S0-D (2026-09-20): the live URL, the cleared public repository and the DLPFC hero deep link are
+# recorded in _source/INVENTORY.md. The embed's poster is `cover`; its link opens the live app.
+links:
+  - kind: live
+    label: StimMap3D live app
+    url: https://stimmap3d.pages.dev
+  - kind: repo
+    label: StimMap3D source on GitHub
+    url: https://github.com/PaigeRattenberry/stimmap3d
+cover: images/stimmap3d/hero-dlpfc.webp
+embed:
+  src: https://stimmap3d.pages.dev/?preset=F3&proto=10hz-hf-l&elec=1#/
+  title: StimMap3D interactive demo
+  note: >-
+    The app opens on its own notice and a getting-started card; the 3D scene is just below them,
+    inside the frame.
+resume:
+  include: true
+  bullets: []
+aside:
+  title: Built with Claude Code
+  paragraphs:
+    - >-
+      StimMap3D was built with Claude Code between June and August 2026. Its repository
+      describes the workflow: work is split around observable contracts, acceptance criteria name
+      the failure cases before implementation, and the maintainer's decisions set the product
+      scope and the scientific boundaries.
+    - >-
+      Its design document states the honesty gates its tests enforce, and its agent instructions
+      repeat them for every session: the disclaimer on every route and exported figure, synthetic
+      trajectories labelled, relative field units. It is explicit that automated review is not
+      independent human review or clinical validation.
+    - >-
+      This site is built the same way, with a build log and screenshots recorded as each
+      session lands.
+  links:
+    - label: StimMap3D's AI-assisted development notes
+      url: https://github.com/PaigeRattenberry/stimmap3d/blob/0a20e810e48dca8aac1780c6478c3d1f51663989/docs/agentic-development.md
+source: resume-2026
+---
+
+## What it is
+
+StimMap3D is an educational, in-browser 3D visualizer for rTMS coil targeting and the electric
+field a figure-8 coil induces in the cortex, with a cited dose–response panel below the scene.
+You drag the coil across a 3D cortex, or pick a standard target, and the heatmap recomputes live
+in clearly labelled relative units, never V/m. It is an illustrative model: not a medical device,
+not for clinical use, and not a prediction of anyone's response to treatment. It is a pure
+static site: the field solver runs in a Web Worker in the browser, there is no backend, and
+every clinical figure cites its open-literature source.
+
+The app is live at [stimmap3d.pages.dev](https://stimmap3d.pages.dev), and its source is public
+on [GitHub](https://github.com/PaigeRattenberry/stimmap3d) under the MIT licence.
+
+<Screenshot asset="images/stimmap3d/visualizer.png" number="2" caption="The visualizer at its default Beam-F3 target: the relative-units legend, the depth–dose readout and the targeting controls, under the app's persistent notice." source="StimMap3D repository, docs/screenshots/visualizer.png" />
+
+## Features
+
+- **Live coil to E-field heatmap.** Drag the coil or pick a preset and the cortex recolors with
+  no per-frame reallocation and no main-thread solve.
+- **Targeting presets with method explainers.** Beam-F3, F4, Fz, Cz and the Fox 2012
+  sgACC-connectivity DLPFC optimum, each cited to its primary source, with cards on the
+  deprecated 5-cm rule, Beam-F3 and connectivity targeting.
+- **Targeting-debate overlay.** Both coil centres and their straight-line scalp gap, derived live
+  from the preset coordinates and labelled as a Euclidean chord rather than a geodesic.
+- **Field-direction glyphs and a self-error map.** An overlay of arrows shows the induced field's
+  tangential direction, and a toggle recolors the cortex by the model's own radial-removal
+  residual, so a stated limitation becomes an inspectable layer.
+- **Depth–dose readout and coil tilt.** A tilt slider cants the coil while the junction stays on
+  target, and a heads-up display shows the half-value depth and on-surface focal spread as
+  surface-derived illustrations, not validated dosimetry.
+- **Dose–response panel.** Odds ratios and absolute response and remission rates on separate,
+  labelled axes; the odds-ratio conversion uses an explicit, sourced sham baseline; the synthetic
+  trajectory cohort is badged as synthetic.
+- **Guided tour, deep links and PNG export.** A skippable tour dispatches the real store actions
+  beat by beat; the configuration encodes to a shareable query URL; a one-click PNG export bakes
+  the disclaimer and relative-units legend into the image so a shared still cannot shed them.
+- **Methods self-check quiz and printable one-pager.** A short retrieval-practice quiz on the
+  Methods page, and a print stylesheet whose header re-bakes the non-clinical disclaimer,
+  synthetic badges and relative-units labels.
+- **Honesty layer and accessibility.** A persistent non-clinical banner on every screen, a
+  Methods & Limitations page, a license-badged provenance ledger, a fully keyboard-driven coil,
+  an `aria-live` region narrating the heatmap result, and `prefers-reduced-motion` support.
+
+<Screenshot asset="images/stimmap3d/focality-glyphs.webp" number="3" caption="Focality iso-contour bands and field-direction glyphs switched on. The legend says what the bands are a percentage of, and that the arrows show direction, not activation." source="Captured from the live app at stimmap3d.pages.dev on 2026-09-20" />
+
+## How the physics works, and what it gets wrong
+
+The model is a simplified analytical spherical-head approximation, not a finite-element
+simulation, chosen so the field recomputes in milliseconds and stays explainable from first
+principles. StimMap3D's design document states the method in one required statement, which the
+app ships on its Methods page:
+
+> E-field = tangential projection of −dA/dt from a magnetic-dipole figure-8 model in a single
+> best-fit spherical conductor (Heller & van Hulsteyn 1992; Eaton 1992; Sarvas 1987). The radial
+> component is zero by the spherical boundary condition and the field is independent of the
+> conductivity profile — which is exactly why it runs in real time and is not anatomically
+> accurate. For anatomically faithful fields, use FEM (e.g., SimNIBS).
+
+The limitations are stated just as plainly, in the same section:
+
+> It **ignores gyral/sulcal folding** (evaluates on a smooth surface; real hotspots can be
+> centimeters off), **tissue heterogeneity** (scalp/skull/CSF/gray/white), **CSF current
+> shunting**, and **white-matter anisotropy**; uses an **idealized dipole coil**
+> (<MetricStat value="~4–10%" /> field error vs. real spiral windings, per PLOS ONE 2017); shows
+> **induced E-field magnitude, not neural activation** (which depends on field direction
+> relative to axons and on thresholds); the **single best-fit sphere** degrades away from the
+> coil and in non-spherical regions (frontal/temporal poles); and it applies a **first-order
+> tangential approximation** — removing the radial component of −∂A/∂t cancels the radial field,
+> but the exact secondary −∇φ also perturbs the *tangential* part, which this model never
+> solves, so even within the sphere the field is approximate (Eaton 1992).
+
+The same section ends: "No FEM comparison or clinical validation is shipped." Both passages are
+quoted from [StimMap3D's DESIGN.md §3.2](https://github.com/PaigeRattenberry/stimmap3d/blob/0a20e810e48dca8aac1780c6478c3d1f51663989/DESIGN.md), read at that commit on 2026-09-20.
+
+<Screenshot asset="images/stimmap3d/methods-limitations.webp" number="4" caption="The Methods & Limitations page opens with the same method statement, word for word; a test in the repository keeps the page and the design document in step." source="Captured from the live app at stimmap3d.pages.dev on 2026-09-20" />
+
+All per-patient outcome trajectories in the dose–response panel are synthetic, generated at
+author time from published summary statistics, and badged as such throughout. Odds ratios stay
+relative to sham and become a probability only against an explicit, labelled baseline.
+
+<Screenshot asset="images/stimmap3d/dose-response.webp" number="5" caption="The dose–response panel: cited absolute rates on one axis, odds ratios against sham on another, and the conversion between them written out against a labelled sham baseline." source="Captured from the live app at stimmap3d.pages.dev on 2026-09-20" />
+
+<Screenshot asset="images/stimmap3d/synthetic-trajectory.webp" number="6" caption="The synthetic cohort, badged as synthetic in the heading, in the legend and in the sentence under the chart: no individual datum is a real measurement." source="Captured from the live app at stimmap3d.pages.dev on 2026-09-20" />
+
+## Engineering rigor
+
+The repository's [validation record](https://github.com/PaigeRattenberry/stimmap3d/blob/0a20e810e48dca8aac1780c6478c3d1f51663989/docs/validation.md) reports
+<MetricStat value="447" /> app tests across <MetricStat value="35" /> files passing in the
+release gate, and all <MetricStat value="24" /> production Chromium checks passing, including
+loading and failure behavior, narrow layouts and PNG export labels. GitHub Actions runs the same
+checks on every push to main and every pull request, with separate jobs for the dependency
+audits and for the mesh pipeline and clinical anchors. An axe-core test in that suite
+structurally guards the app's panels. The record closes on its own limit: these are automated
+checks and visual inspection, not independent human review or clinical validation.
+
+The honesty gates themselves, as [StimMap3D's DESIGN.md §1](https://github.com/PaigeRattenberry/stimmap3d/blob/0a20e810e48dca8aac1780c6478c3d1f51663989/DESIGN.md) states them:
+
+> - **(a)** The non-clinical disclaimer is visible on every route and carried into exported and
+>   printed figures.
+> - **(b)** The Methods & Limitations page is reachable and quotes the method statement and
+>   limitations in §3.2.
+> - **(c)** Odds ratios are never plotted or mixed with absolute response rates; they become
+>   probabilities only against an explicit, labeled sham baseline (§4).
+> - **(d)** All synthetic data is badged as synthetic, and every figure resolves to a
+>   citation-ledger entry.
+> - **(e)** The E-field is shown only in clearly labeled relative units, never V/m or a
+>   calibrated dose.

@@ -1,0 +1,167 @@
+---
+# Title, dates and bullets from the resume of record; bullet 1 says "Built" where it said
+# "Designed" (Paige, 2026-10-07, Session 9b), and bullet 2 credits the design's
+# authors (Session 9, Paige 2026-10-06). The body (Session 4) is written
+# from the thesis in _source/thesis (INVENTORY.md settled facts); its figures replot the thesis's
+# own tables from content/figures.ts. Every number in the body is a MetricStat reference to a
+# metric declared here; thesis page numbers in notes are the printed ones.
+slug: interpretable-medical-imaging-thesis
+title: Evaluation of Feature Attribution Methods in Interpretable Machine Learning
+displayTitle: Testing medical-AI explanations
+tagline: "Honours thesis: how do you score an explanation method when there is no ground truth for what the model used?"
+proof: >-
+  Scored five explanation methods against ground truth induced by watermarking chest X-rays.
+  FullGrad was the most robust and precise.
+year: 2022
+dates: Apr – Aug 2022
+periods:
+  - { start: "2022-04", end: "2022-08" }
+kind: research
+featured: true
+deepPage: true
+order: 2
+bullets:
+  - >-
+    Built a machine learning framework in PyTorch to evaluate the interpretability of deep
+    neural networks (DNNs) for medical image classification in safety-critical applications,
+    training and benchmarking ResNet-34 and VGG-16 models.
+  - >-
+    Applied Zhou et al.'s induced-ground-truth design (AAAI 2022) to chest X-rays: watermarked
+    them, then used IoU and paired t-tests to measure how precisely five CAM methods localized
+    the watermark; found FullGrad the most robust and precise, improved further by thresholding.
+skills: [pytorch, xai, medical-imaging, image-classification, cnns]
+metrics:
+  - value: five
+    label: class activation map (CAM) explanation methods compared
+    source: resume-2026
+  - value: "50–95%"
+    label: thresholds at which each CAM was binarized before scoring, in steps of five points
+    source: _source/thesis/honours-thesis-2022.pdf
+    note: Thesis §3.7, p. 19. Pixels scoring above the threshold form the prediction mask.
+  - value: ten
+    label: watermarked test images per experiment over which IoU was averaged
+    source: _source/thesis/honours-thesis-2022.pdf
+    note: Thesis §3.7, p. 19.
+  - value: "5%"
+    label: significance level (alpha) of the paired t-tests
+    source: _source/thesis/honours-thesis-2022.pdf
+    note: Thesis §3.8, p. 21; FullGrad against the runner-up method at each threshold.
+  - value: four of the five
+    label: >-
+      CAM methods that appeared to highlight the border between spine and lung instead of the
+      planted watermark, in one ResNet-34 run
+    source: _source/thesis/honours-thesis-2022.pdf
+    note: >-
+      Thesis §4.2, Fig. 4.4 and Table 4.3, pp. 25–27. The watermark sat at the side of the region
+      FullGrad highlighted (p. 26).
+  - value: "0.53"
+    label: best average IoU for FullGrad explaining ResNet-34, at the 90% threshold
+    source: _source/thesis/honours-thesis-2022.pdf
+    note: Table 4.6, p. 31, prints .530 (the text on p. 24 rounds it to 0.53 and once to 0.54).
+  - value: "0.560"
+    label: best average IoU for FullGrad explaining VGG-16, at the 65% threshold
+    source: _source/thesis/honours-thesis-2022.pdf
+    note: Table 4.7, p. 31.
+links:
+  - kind: pdf
+    label: Thesis PDF (approval page removed)
+    url: /docs/paige-rattenberry-honours-thesis-2022.pdf
+resume:
+  include: true
+  bullets: []
+source: resume-2026
+---
+
+## The question
+
+A classifier that scores well on a medical-image benchmark may have learned the disease, or it
+may have learned an artifact that travels with the label: a scanner's text overlay, a ward's
+marker. Saliency maps, class activation maps among them, are supposed to reveal which, by
+highlighting the pixels a prediction depended on. But an explanation method is itself a chain of
+mathematical operations with assumptions of its own, and on a real dataset there is no ground
+truth for what the model used, so there is no way to score whether the map is right. My honours
+thesis asked how well <MetricStat value="five" /> CAM methods (Grad-CAM, Grad-CAM++, Layer-CAM,
+Eigen-CAM and FullGrad) localize the evidence a near-perfect classifier actually relies on, once
+that evidence is known.
+
+## Inducing ground truth
+
+The way to know is to plant it. The design is not mine: it comes from Yilun Zhou, Serena Booth,
+Marco Tulio Ribeiro and Julie Shah's paper "Do Feature Attribution Methods Correctly Attribute
+Features?" (AAAI 2022) and the Feature Attribution Evaluation repository that accompanies it, both
+of which the thesis cites. I applied it to chest X-rays. Starting from the public COVID-19
+Radiography Database of chest X-rays, I reassigned every image's label at random, so nothing in the
+original image could predict its new label, and then added a text watermark of random size and
+position to the positive class only, saving its rectangle as a binary mask. A model that reaches
+high validation accuracy on this data can only have done so by reading the watermark. A CAM that
+explains that model correctly should highlight the watermark and nothing else, and the mask makes
+the comparison measurable. The ground truth is induced, not annotated: no radiologist marked
+anything.
+
+<Diagram id="thesis-procedure" number="1" />
+
+## Method
+
+I trained ResNet-34 and VGG-16 from randomly initialized weights in PyTorch on Google Colab,
+then generated CAMs from each method for watermarked test images with the pytorch-grad-cam
+library, targeting each network's final convolutional layer. Each CAM assigns every pixel a
+score; I binarized the map at thresholds of <MetricStat value="50–95%" /> and scored each binary
+mask against the ground truth by intersection over union, averaged over <MetricStat value="ten" />
+watermarked test images per experiment. Paired t-tests then compared FullGrad's per-image scores
+with the runner-up method's at each threshold, at a significance level of
+<MetricStat value="5%" />. No new metric was defined; the point was to apply a plain, defensible
+one where ground truth existed.
+
+## What the scores showed
+
+<IouChart id="iou-resnet34" number="2" />
+
+Explaining ResNet-34 (Fig. 2), FullGrad's maps were the sharpest and most targeted on the
+watermark, but they carried a dispersed checkerboard pattern that no other method showed.
+Thresholding removed it: FullGrad's average IoU rose with the threshold to
+<MetricStat value="0.53" />, the best score in the experiment, while every other method peaked
+lower and earlier. Eigen-CAM led at low thresholds; Grad-CAM++ and Layer-CAM were nearly
+indistinguishable at every threshold, in the maps and in the scores.
+
+<IouChart id="iou-vgg16" number="3" />
+
+Explaining VGG-16 (Fig. 3), FullGrad almost exclusively highlighted the watermark, with no
+dispersion, and reached <MetricStat value="0.560" />, among the highest averages in any
+experiment. Grad-CAM assigned no attribution at all in that run. The t-tests supported both
+pictures: wherever FullGrad led, its advantage over the runner-up was statistically significant,
+except at VGG-16's highest thresholds, where thresholding had removed too many pixels from every
+mask.
+
+The failures matter as much as the winners. In one ResNet-34 experiment,
+<MetricStat value="four of the five" /> methods appeared to highlight the border between spine and
+lung instead of the watermark; FullGrad was not centred on the watermark either, though the
+watermark sat at the edge of the region it highlighted, and every score fell to near zero. In a
+VGG-16 run that never learned the task, most maps were noise, though FullGrad still found the
+watermark. A CAM can only be as good as the model it explains, and a method's behaviour changes with
+the architecture: the same FullGrad produced different maps for the two networks.
+
+## Why it matters
+
+In clinics, a deep network that reads X-rays will be judged by whether people can trust it, and
+saliency maps are the tool offered for that trust. My results say the tool must itself be
+tested: some methods missed the planted evidence entirely, a convincing-looking map can be
+wrong, and the right threshold depends on the method. FullGrad, the only method tested that
+satisfies local and global attribution at once, was the most robust, precise and accurate in
+these experiments, and thresholding its output made it better. That is a reason to evaluate
+explanation methods against induced ground truth before deploying them, not a reason to trust
+any of them unexamined. It is also the habit I have kept since: build the measuring instrument
+before trusting the thing being measured.
+
+What carries beyond this setting is the approach, not the result. Plant a feature you control,
+so that there is something to score an explanation against. Report the runs where every method
+failed alongside the ones that produced a winner. Expect an explanation method's behaviour to
+change with the system it explains. What does not carry is the evidence. These were
+convolutional image classifiers reading chest X-rays, not language models, and a class
+activation map says nothing about the internals of a transformer. Whether the same approach
+holds up on other kinds of model is a question this thesis does not answer.
+
+## The thesis
+
+The full thesis is linked in the facts column, as a copy with its signed approval page removed.
+I wrote it in the SFU Multimedia Lab under the supervision of Dr. Ivan V. Bajić, whose suggested
+experiments and revisions shaped it.

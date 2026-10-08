@@ -1,0 +1,37 @@
+# Source materials staged by Paige (PDFs, docs, photos). Never committed.
+_source/
+
+# Generated at build by scripts/build-resume.tsx (prebuild); never committed
+/public/Paige-Rattenberry-Resume.pdf
+/public/Paige-Rattenberry-Resume.pdf.overflow.pdf
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+.vercel/
+*.tsbuildinfo
+next-env.d.ts
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Tests
+test-results/
+playwright-report/
+coverage/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# Playwright MCP plugin output
+.playwright-mcp/
+
+# Local notes. Never committed.
+/private/
+
+# Lighthouse CI output
+.lighthouseci/

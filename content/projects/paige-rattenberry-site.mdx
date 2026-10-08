@@ -1,0 +1,47 @@
+---
+# Card only (Session 9; Paige's decision of 2026-10-06). Every fact is already in the tree: who did
+# what is content/build-story.ts (lede and transparency lists), the gates are AGENTS.md and
+# .github/workflows/ci.yml, the dates are content/generated/build-stats.json (first merge
+# 2026-09-08) and DESIGN.md (planning session 2026-09-07); the period stays open because work
+# continues in the public repository after launch (IMPLEMENTATION_PLAN §6). No count is typed
+# here: the history numbers live in build-stats.json and the error counts are computed on
+# /how-this-was-built. Codex's credit (GPT-6, the September 13 review and its follow-up) is
+# content/build-story.ts's tools list.
+slug: paige-rattenberry-site
+title: This site, built with Claude Code under CI gates
+displayTitle: This site
+tagline: A fully static portfolio built by Claude Code one reviewed pull request at a time, with every number tied to its source
+proof: >-
+  Directed Claude Code through every session as a reviewed pull request, and held its work to
+  claims, publication, accessibility and performance gates in CI.
+year: 2026
+dates: Sep 2026 – Present
+periods:
+  - { start: "2026-09", end: null }
+kind: project
+featured: false
+deepPage: false
+bullets:
+  - >-
+    Directed Claude Code through the build one session and one reviewed pull request at a time:
+    made the decisions recorded in the written plan and reviewed and merged every pull request,
+    while the agents wrote the code, tests and a per-session log of what they got wrong (Claude
+    Code throughout; Codex, GPT-6, for one review and its follow-up).
+  - >-
+    Held the agents' work to gates in CI: a claims gate that fails the build on any declared
+    metric without a named source, a publication gate on private paths and terms, axe
+    accessibility checks in both themes, and Lighthouse and JavaScript-budget limits; the site
+    publishes every session's build log, with what the agents got wrong and which check caught it.
+skills: [typescript, nextjs, claude-code, codex, ci-gated-validation, github-actions]
+metrics: []
+resume:
+  include: true
+  org: Personal project
+  bullets:
+    - >-
+      Directed Claude Code through every session as a reviewed pull request, with Codex (GPT-6)
+      for one review and its follow-up, making the decisions and merging every PR, and held the
+      agents' work to CI gates: a claims gate on unsourced metrics, a publication gate on private
+      paths and terms, and accessibility and performance limits.
+source: site-build-record
+---

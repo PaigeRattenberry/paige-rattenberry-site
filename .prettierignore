@@ -1,0 +1,17 @@
+node_modules
+.next
+out
+_source
+docs/screenshots
+test-results
+playwright-report
+package-lock.json
+next-env.d.ts
+DESIGN.md
+IMPLEMENTATION_PLAN.md
+SESSION_PROMPTS.md
+AGENTS.md
+CLAUDE.md
+docs/build-log
+# MDX bodies carry verbatim quotations; keep their source text as written.
+content/projects/*.mdx

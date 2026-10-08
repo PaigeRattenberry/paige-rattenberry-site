@@ -1,0 +1,338 @@
+[
+  {
+    "path": "images/about/paige-rattenberry.jpg",
+    "people": ["Paige Rattenberry"],
+    "consent": true,
+    "alt": "Paige Rattenberry",
+    "width": 433,
+    "height": 577,
+    "kind": "image",
+    "provenance": {
+      "kind": "staged",
+      "source": "_source/photos/headshot.jpg",
+      "revision": "sha256-base64:9u82R+BUBEJXWV8PB7Re4LTfao5giHS+eMiGoxtuXZ8="
+    },
+    "rights": "Personal headshot supplied by Paige Rattenberry; portfolio publication permission recorded in the source inventory.",
+    "permission": "Recorded in the private source inventory: publishable; Paige only.",
+    "transformations": [
+      "Professional headshot (taken 2018-09-03). EXIF Orientation = 6 baked into the pixels with sharp's rotate(), then written with no EXIF, XMP or ICC metadata (the source inventory's handling note). Display at 220 px or less; the original is only 433 px wide."
+    ]
+  },
+  {
+    "path": "images/stimmap3d/hero-dlpfc.webp",
+    "people": [],
+    "consent": true,
+    "kind": "image",
+    "rights": "Screenshot of StimMap3D, Paige Rattenberry's own application (code MIT licensed, copyright Paige Rattenberry). The brain and scalp meshes it renders keep their own terms, listed in the StimMap3D repository's NOTICE.md and on the app's Sources page.",
+    "permission": "Recorded in the private source inventory, 2026-09-20 (S0-D): Paige deployed the app, made the repository public and cleared it for linking; IMPLEMENTATION_PLAN §4 Session 3b (amended 2026-09-20 at Paige's request) directs one repository screenshot plus live captures to ship under public/images/stimmap3d/. No people appear.",
+    "alt": "StimMap3D with a figure-8 coil over the left DLPFC of a 3D brain, labelled F3, F4, Fz and Cz scalp sites, a schematic DLPFC to sgACC cue, a relative-units heatmap legend, and the banner reading Illustrative model, not for clinical use.",
+    "width": 1440,
+    "height": 810,
+    "provenance": {
+      "kind": "staged",
+      "source": "_source/stimmap3d/hero-dlpfc.png",
+      "revision": "sha256-base64:Mq/FsZNmHECyehhO5aRKLQfutEMeMAzvwRhKU8+Ow78=; captured 2026-09-20 from https://stimmap3d.pages.dev (Cloudflare Pages, deployed from the public repository's main, whose head at capture time was 0a20e810e48dca8aac1780c6478c3d1f51663989; the deployment carries no commit marker of its own)"
+    },
+    "transformations": [
+      "Captured by scripts/capture-stimmap3d.mjs with Playwright (Chromium, 1440x810 viewport, device scale factor 1) from https://stimmap3d.pages.dev/?preset=F3&proto=10hz-hf-l&elec=1#/ (the DLPFC hero deep link recorded at S0-D). The app's getting-started card was dismissed through the app's own localStorage flag, the one its close button sets; nothing else on the page was changed. The app's disclaimer banner is in frame.",
+      "Staged PNG re-encoded to WebP (sharp, quality 86) at the same pixel size; no crop, no resize, no retouching."
+    ]
+  },
+  {
+    "path": "images/stimmap3d/visualizer.png",
+    "people": [],
+    "consent": true,
+    "kind": "image",
+    "rights": "Screenshot of StimMap3D, Paige Rattenberry's own application (code MIT licensed, copyright Paige Rattenberry). The brain and scalp meshes it renders keep their own terms, listed in the StimMap3D repository's NOTICE.md and on the app's Sources page.",
+    "permission": "Recorded in the private source inventory, 2026-09-20 (S0-D): Paige deployed the app, made the repository public and cleared it for linking; IMPLEMENTATION_PLAN §4 Session 3b (amended 2026-09-20 at Paige's request) directs one repository screenshot plus live captures to ship under public/images/stimmap3d/. No people appear.",
+    "alt": "StimMap3D's visualizer: a figure-8 coil over a 3D brain with a heatmap in relative units, a depth–dose readout, targeting preset and intensity controls, and the banner reading Illustrative model, not for clinical use.",
+    "width": 1440,
+    "height": 1000,
+    "provenance": {
+      "kind": "repository",
+      "source": "stimmap3d-repo",
+      "repository": "https://github.com/PaigeRattenberry/stimmap3d",
+      "sourceFile": "docs/screenshots/visualizer.png",
+      "revision": "0a20e810e48dca8aac1780c6478c3d1f51663989"
+    },
+    "transformations": [
+      "None: a byte-identical copy of the file at that commit (git blob 03e0d1dfe0612b51b6c5ea3b5ac091e6ffa2f6d8, SHA-256 201ed3fecf3b201cc1283e1386735b405110ce6834aafa79f500a2d47d3cb57d). It is the only screenshot the public repository ships."
+    ]
+  },
+  {
+    "path": "images/stimmap3d/focality-glyphs.webp",
+    "people": [],
+    "consent": true,
+    "kind": "image",
+    "rights": "Screenshot of StimMap3D, Paige Rattenberry's own application (code MIT licensed, copyright Paige Rattenberry). The brain and scalp meshes it renders keep their own terms, listed in the StimMap3D repository's NOTICE.md and on the app's Sources page.",
+    "permission": "Recorded in the private source inventory, 2026-09-20 (S0-D): Paige deployed the app, made the repository public and cleared it for linking; IMPLEMENTATION_PLAN §4 Session 3b (amended 2026-09-20 at Paige's request) directs one repository screenshot plus live captures to ship under public/images/stimmap3d/. No people appear.",
+    "alt": "StimMap3D with focality iso-contour bands and field-direction arrows on the cortex under the coil, a peak marker reading 100%, a legend stating relative units, not V/m, and the not for clinical use banner.",
+    "width": 1440,
+    "height": 1000,
+    "provenance": {
+      "kind": "staged",
+      "source": "_source/stimmap3d/focality-glyphs.png",
+      "revision": "sha256-base64:xPbPVu3gyx3I8edRTstMEl7M0jAA3iVwMWlY7bBC5S0=; captured 2026-09-20 from https://stimmap3d.pages.dev (Cloudflare Pages, deployed from the public repository's main, whose head at capture time was 0a20e810e48dca8aac1780c6478c3d1f51663989; the deployment carries no commit marker of its own)"
+    },
+    "transformations": [
+      "Captured by scripts/capture-stimmap3d.mjs with Playwright (Chromium, 1440x1000 viewport, device scale factor 1) from https://stimmap3d.pages.dev/?preset=F3&proto=10hz-hf-l&contour=1&glyph=1#/. The app's getting-started card was dismissed through the app's own localStorage flag, the one its close button sets; nothing else on the page was changed. The app's disclaimer banner is in frame.",
+      "Staged PNG re-encoded to WebP (sharp, quality 86) at the same pixel size; no crop, no resize, no retouching."
+    ]
+  },
+  {
+    "path": "images/stimmap3d/methods-limitations.webp",
+    "people": [],
+    "consent": true,
+    "kind": "image",
+    "rights": "Screenshot of StimMap3D, Paige Rattenberry's own application (code MIT licensed, copyright Paige Rattenberry). The brain and scalp meshes it renders keep their own terms, listed in the StimMap3D repository's NOTICE.md and on the app's Sources page.",
+    "permission": "Recorded in the private source inventory, 2026-09-20 (S0-D): Paige deployed the app, made the repository public and cleared it for linking; IMPLEMENTATION_PLAN §4 Session 3b (amended 2026-09-20 at Paige's request) directs one repository screenshot plus live captures to ship under public/images/stimmap3d/. No people appear.",
+    "alt": "StimMap3D's Methods & Limitations page: a heading, a sentence calling the tool educational and illustrative, the method statement in a quoted block, and the start of the spherical-approximation derivation, under the not for clinical use banner.",
+    "width": 1440,
+    "height": 1000,
+    "provenance": {
+      "kind": "staged",
+      "source": "_source/stimmap3d/methods-limitations.png",
+      "revision": "sha256-base64:raRY3HSXqC85g0mQM1X/Pv5nlqwbNTdKGnIi0UTa5Q8=; captured 2026-09-20 from https://stimmap3d.pages.dev (Cloudflare Pages, deployed from the public repository's main, whose head at capture time was 0a20e810e48dca8aac1780c6478c3d1f51663989; the deployment carries no commit marker of its own)"
+    },
+    "transformations": [
+      "Captured by scripts/capture-stimmap3d.mjs with Playwright (Chromium, 1440x1000 viewport, device scale factor 1) from https://stimmap3d.pages.dev/#/methods. The app's getting-started card was dismissed through the app's own localStorage flag, the one its close button sets; nothing else on the page was changed. The app's disclaimer banner is in frame.",
+      "Staged PNG re-encoded to WebP (sharp, quality 86) at the same pixel size; no crop, no resize, no retouching."
+    ]
+  },
+  {
+    "path": "images/stimmap3d/dose-response.webp",
+    "people": [],
+    "consent": true,
+    "kind": "image",
+    "rights": "Screenshot of StimMap3D, Paige Rattenberry's own application (code MIT licensed, copyright Paige Rattenberry). The brain and scalp meshes it renders keep their own terms, listed in the StimMap3D repository's NOTICE.md and on the app's Sources page.",
+    "permission": "Recorded in the private source inventory, 2026-09-20 (S0-D): Paige deployed the app, made the repository public and cleared it for linking; IMPLEMENTATION_PLAN §4 Session 3b (amended 2026-09-20 at Paige's request) directs one repository screenshot plus live captures to ship under public/images/stimmap3d/. No people appear.",
+    "alt": "StimMap3D's dose–response panel, badged synthetic: a bar chart of cited response and remission percentages beside a separate odds-ratio chart against sham, with the odds-to-probability conversion written out, under the not for clinical use banner.",
+    "width": 1440,
+    "height": 1000,
+    "provenance": {
+      "kind": "staged",
+      "source": "_source/stimmap3d/dose-response.png",
+      "revision": "sha256-base64:gCW5Unb9a1k2+2/nvR4WD4lC5LYqWbx0muWJ7LhQ/aU=; captured 2026-09-20 from https://stimmap3d.pages.dev (Cloudflare Pages, deployed from the public repository's main, whose head at capture time was 0a20e810e48dca8aac1780c6478c3d1f51663989; the deployment carries no commit marker of its own)"
+    },
+    "transformations": [
+      "Captured by scripts/capture-stimmap3d.mjs with Playwright (Chromium, 1440x1000 viewport, device scale factor 1) from https://stimmap3d.pages.dev/?preset=F3&proto=10hz-hf-l#/, scrolled so the panel's heading sits under the sticky banner. The app's getting-started card was dismissed through the app's own localStorage flag, the one its close button sets; nothing else on the page was changed. The app's disclaimer banner is in frame.",
+      "Staged PNG re-encoded to WebP (sharp, quality 86) at the same pixel size; no crop, no resize, no retouching."
+    ]
+  },
+  {
+    "path": "images/stimmap3d/synthetic-trajectory.webp",
+    "people": [],
+    "consent": true,
+    "kind": "image",
+    "rights": "Screenshot of StimMap3D, Paige Rattenberry's own application (code MIT licensed, copyright Paige Rattenberry). The brain and scalp meshes it renders keep their own terms, listed in the StimMap3D repository's NOTICE.md and on the app's Sources page.",
+    "permission": "Recorded in the private source inventory, 2026-09-20 (S0-D): Paige deployed the app, made the repository public and cleared it for linking; IMPLEMENTATION_PLAN §4 Session 3b (amended 2026-09-20 at Paige's request) directs one repository screenshot plus live captures to ship under public/images/stimmap3d/. No people appear.",
+    "alt": "StimMap3D's synthetic MADRS trajectory chart, badged synthetic: a cohort mean line with a shaded band over six weeks, a caption saying the simulated patients are not real patients, and the accelerated-protocols note below, under the not for clinical use banner.",
+    "width": 1440,
+    "height": 1000,
+    "provenance": {
+      "kind": "staged",
+      "source": "_source/stimmap3d/synthetic-trajectory.png",
+      "revision": "sha256-base64:CZjMIiwzgncfThdFGkPTCAWdjmVSfjyUnw7YjJ7zv6A=; captured 2026-09-20 from https://stimmap3d.pages.dev (Cloudflare Pages, deployed from the public repository's main, whose head at capture time was 0a20e810e48dca8aac1780c6478c3d1f51663989; the deployment carries no commit marker of its own)"
+    },
+    "transformations": [
+      "Captured by scripts/capture-stimmap3d.mjs with Playwright (Chromium, 1440x1000 viewport, device scale factor 1) from https://stimmap3d.pages.dev/?preset=F3&proto=10hz-hf-l#/, scrolled so the chart's heading sits under the sticky banner. The app's getting-started card was dismissed through the app's own localStorage flag, the one its close button sets; nothing else on the page was changed. The app's disclaimer banner is in frame.",
+      "Staged PNG re-encoded to WebP (sharp, quality 86) at the same pixel size; no crop, no resize, no retouching."
+    ]
+  },
+  {
+    "path": "docs/paige-rattenberry-honours-thesis-2022.pdf",
+    "kind": "document",
+    "title": "Evaluation of Feature Attribution Methods in Interpretable Machine Learning (BASc Honours thesis, Simon Fraser University, Summer 2022)",
+    "mediaType": "application/pdf",
+    "pageCount": 48,
+    "removedPages": [2],
+    "people": [
+      "Paige Rattenberry (author)",
+      "The academic supervisor, Dr. Ivan V. Bajić, and the committee members, Dr. Mirza Faisal Beg and Dr. Parvaneh Saeedi, are thanked by name in the author's acknowledgements (page iv); their signatures were only on the removed approval page"
+    ],
+    "consent": true,
+    "provenance": {
+      "kind": "staged",
+      "source": "_source/thesis/honours-thesis-2022.pdf",
+      "revision": "sha256-base64:9C284t/MdTCOfoVYWHA1yjUoykquH/VE5sHu2nB0qv0="
+    },
+    "rights": "Copyright Paige Rattenberry 2022 (title page): the author's own work.",
+    "permission": "Recorded in the private source inventory: publishable as Paige's own work, on the condition (decided 2026-09-12) that a copy with page 2, the signed approval page, removed is what ships. Consent for the people thanked by name in the acknowledgements recorded in the inventory, 2026-09-15.",
+    "transformations": [
+      "Original page 2 (the signed approval page) removed with pdf-lib by scripts/derive-thesis-pdf.mjs on 2026-09-13; 49 pages became 48 and page 2 of the copy is the abstract. Document metadata kept the title and author; the producer field now names pdf-lib.",
+      "Re-derived on 2026-09-14 after review found that the first copy still carried the removed page's objects (its form XObject, the four scanned images inside it and the approval file's info dict), unlinked from the page tree but readable with a PDF object tool. The script now also drops the named destination that pointed at page 2 and deletes every object not reachable from the trailer (10 objects: the page, its content stream, the form XObject, its four images and info dict, the named destination, and a stray stream-length number), and renumbers the page labels so the viewer shows the printed numbers (i, iii to viii, then 1). The modification date is fixed so the derivation is reproducible. No kept page, image or text was changed; tests/unit/documents.test.ts checks for orphaned objects, the page-object count and the labels.",
+      "Checked after derivation: pdftotext over the whole copy finds no placeholder, no approval or signature text and no phone number (the generic DESIGN §3.4 pattern matches only IoU table rows and DOI strings); the text-only check cannot inspect the JPEG 2000 figure images, which are the author's own experiment output and reference figures reproduced from cited papers."
+    ]
+  },
+  {
+    "path": "docs/paige-rattenberry-genai-interpretability-review-2024.pdf",
+    "kind": "document",
+    "title": "Interpretability and Explainability in Generative Artificial Intelligence: Literature Review (Paige Rattenberry, 21 April 2024)",
+    "mediaType": "application/pdf",
+    "pageCount": 10,
+    "removedPages": [],
+    "people": ["Paige Rattenberry (author)"],
+    "consent": true,
+    "provenance": {
+      "kind": "staged",
+      "source": "_source/research/genai-interpretability-review-2024.pdf",
+      "revision": "sha256-base64:ANPBr0Q2KoFz916GI/Z52pMxn9/gyXYS4FW001FU+Iw="
+    },
+    "rights": "Paige Rattenberry's own single-author literature review (title page, 21 April 2024). Figures inside it are reproduced from the cited papers (e.g. the DARPA XAI chart on page 2), so the PDF ships whole and no figure is ever lifted out as a site image.",
+    "permission": "Recorded in the private source inventory: publishable as Paige's own work, no other people in it. Paige decided on 2026-09-15 that it ships as a copy, not a derivative (IMPLEMENTATION_PLAN §4 Session 6 amendment).",
+    "transformations": [
+      "Copied whole by scripts/derive-literature-review-pdf.mjs (pdf-lib) on 2026-09-16: all 10 pages, text and images unchanged. The Word export carried no /Title, which every shipped document needs, so the title page's title was written into the document info; the author field (Paige Rattenberry) and the Word creator/producer fields are kept; the modification date is fixed so the derivation is reproducible (two runs give identical bytes).",
+      "One unreachable object (an empty /Names dictionary Word's export left behind) is deleted so tests/unit/documents.test.ts finds nothing outside the page tree; page sizes and labels match the original.",
+      "Checked before shipping: pdftotext and pdf-parse over all 10 pages find no placeholder, no email or phone number and no name other than the author's (the running header repeats it). The DESIGN §3.4 phone pattern matches only DOI strings and a page range in the references on pages 9 and 10, each given a page-specific exception in tests/unit/documents.test.ts."
+    ]
+  },
+  {
+    "path": "Paige-Rattenberry-Resume.pdf",
+    "kind": "document",
+    "title": "Paige Rattenberry – Resume",
+    "mediaType": "application/pdf",
+    "pageCount": 2,
+    "removedPages": [],
+    "people": ["Paige Rattenberry"],
+    "consent": true,
+    "provenance": {
+      "kind": "repository",
+      "source": "paigewebsite-repo",
+      "repository": "https://github.com/PaigeRattenberry/paigewebsite",
+      "sourceFile": "scripts/build-resume.tsx",
+      "revision": "02b6d74fa20807bf9cde1ec2271740bf813af78d"
+    },
+    "rights": "Generated from content/ (the site's single source of truth, © Paige Rattenberry) by scripts/build-resume.tsx; the resume of record it mirrors is _source/resume/resume-2026-09-11.pdf, which is Paige's own document.",
+    "permission": "DESIGN §5.4 and IMPLEMENTATION_PLAN §4 Session 6: the resume PDF is generated from content/ at build and served at /Paige-Rattenberry-Resume.pdf behind the /resume redirect. Every fact in it already passes the claims gate on the site.",
+    "transformations": [
+      "Not a copy of any staged file: rendered at every build (npm run build's prebuild, and pretest) from the validated content modules with @react-pdf/renderer 4.9.0, so the file is git-ignored and the recorded revision is the commit whose generator and content it reflects; the layout mirrors the resume of record's section order and density with the site's fonts (@fontsource woff files) and teal accent in place of its blue section bars.",
+      "tests/unit/resume.test.ts checks the shipped file: at most two pages, the name, email, Hammerspace and StimMap3D present, no DESIGN §3.4 phone pattern and no unfilled '[ADD ' placeholder; tests/unit/documents.test.ts checks the page count, the PDF title and the object graph."
+    ]
+  },
+  {
+    "path": "images/build-story/s1-home.webp",
+    "people": [],
+    "consent": true,
+    "kind": "image",
+    "rights": "Screenshot of this site, captured with Playwright during the session named in the caption; site content © Paige Rattenberry, code MIT.",
+    "permission": "Paige's decision D5 (2026-09-30, IMPLEMENTATION_PLAN §3 S0-G): all of docs/screenshots/ ships in the public repository, where every screenshot was checked in S0-G; IMPLEMENTATION_PLAN §4 Session 8 asks for a screenshot gallery on /how-this-was-built. No people appear.",
+    "alt": "The site's home page after Session 1: the name in a serif headline over teal contour lines, a short introduction and three buttons, with the header navigation above.",
+    "width": 1280,
+    "height": 800,
+    "provenance": {
+      "kind": "repository",
+      "source": "paigewebsite-repo",
+      "repository": "https://github.com/PaigeRattenberry/paigewebsite",
+      "sourceFile": "docs/screenshots/s1-home-1280.png",
+      "revision": "7333ec654d05541ff54e83b4e46d663abdd3140b"
+    },
+    "transformations": [
+      "Cropped to 1280×800 px starting 0 px from the top of the full-page capture and re-encoded as WebP (quality 80) by scripts/derive-build-story-images.ts; the crop is listed in content/build-story.ts. The committed PNG is unchanged."
+    ]
+  },
+  {
+    "path": "images/build-story/s2-home.webp",
+    "people": [],
+    "consent": true,
+    "kind": "image",
+    "rights": "Screenshot of this site, captured with Playwright during the session named in the caption; site content © Paige Rattenberry, code MIT.",
+    "permission": "Paige's decision D5 (2026-09-30, IMPLEMENTATION_PLAN §3 S0-G): all of docs/screenshots/ ships in the public repository, where every screenshot was checked in S0-G; IMPLEMENTATION_PLAN §4 Session 8 asks for a screenshot gallery on /how-this-was-built. No people appear.",
+    "alt": "The home page after Session 2: the name, a one-paragraph headline, three buttons and the start of a three-card Selected work row, over faint contour lines.",
+    "width": 1280,
+    "height": 800,
+    "provenance": {
+      "kind": "repository",
+      "source": "paigewebsite-repo",
+      "repository": "https://github.com/PaigeRattenberry/paigewebsite",
+      "sourceFile": "docs/screenshots/s2-home-1280.png",
+      "revision": "7333ec654d05541ff54e83b4e46d663abdd3140b"
+    },
+    "transformations": [
+      "Cropped to 1280×800 px starting 0 px from the top of the full-page capture and re-encoded as WebP (quality 80) by scripts/derive-build-story-images.ts; the crop is listed in content/build-story.ts. The committed PNG is unchanged."
+    ]
+  },
+  {
+    "path": "images/build-story/s3a-projects.webp",
+    "people": [],
+    "consent": true,
+    "kind": "image",
+    "rights": "Screenshot of this site, captured with Playwright during the session named in the caption; site content © Paige Rattenberry, code MIT.",
+    "permission": "Paige's decision D5 (2026-09-30, IMPLEMENTATION_PLAN §3 S0-G): all of docs/screenshots/ ships in the public repository, where every screenshot was checked in S0-G; IMPLEMENTATION_PLAN §4 Session 8 asks for a screenshot gallery on /how-this-was-built. No people appear.",
+    "alt": "The projects index after Session 3a: three case-study cards, StimMap3D first with its disclaimer line, and the start of a filterable list below.",
+    "width": 1280,
+    "height": 800,
+    "provenance": {
+      "kind": "repository",
+      "source": "paigewebsite-repo",
+      "repository": "https://github.com/PaigeRattenberry/paigewebsite",
+      "sourceFile": "docs/screenshots/s3a-projects-1280.png",
+      "revision": "7333ec654d05541ff54e83b4e46d663abdd3140b"
+    },
+    "transformations": [
+      "Cropped to 1280×800 px starting 0 px from the top of the full-page capture and re-encoded as WebP (quality 80) by scripts/derive-build-story-images.ts; the crop is listed in content/build-story.ts. The committed PNG is unchanged."
+    ]
+  },
+  {
+    "path": "images/build-story/s3b-stimmap3d.webp",
+    "people": [],
+    "consent": true,
+    "kind": "image",
+    "rights": "Screenshot of this site, captured with Playwright during the session named in the caption; site content © Paige Rattenberry, code MIT.",
+    "permission": "Paige's decision D5 (2026-09-30, IMPLEMENTATION_PLAN §3 S0-G): all of docs/screenshots/ ships in the public repository, where every screenshot was checked in S0-G; IMPLEMENTATION_PLAN §4 Session 8 asks for a screenshot gallery on /how-this-was-built. No people appear.",
+    "alt": "The StimMap3D project page after Session 3b: the title and tagline, the boxed disclaimer Illustrative model, not for clinical use, and below it the poster of the embedded app.",
+    "width": 1280,
+    "height": 800,
+    "provenance": {
+      "kind": "repository",
+      "source": "paigewebsite-repo",
+      "repository": "https://github.com/PaigeRattenberry/paigewebsite",
+      "sourceFile": "docs/screenshots/s3b-projects-stimmap3d-1280.png",
+      "revision": "7333ec654d05541ff54e83b4e46d663abdd3140b"
+    },
+    "transformations": [
+      "Cropped to 1280×800 px starting 0 px from the top of the full-page capture and re-encoded as WebP (quality 80) by scripts/derive-build-story-images.ts; the crop is listed in content/build-story.ts. The committed PNG is unchanged."
+    ]
+  },
+  {
+    "path": "images/build-story/s5-experience.webp",
+    "people": [],
+    "consent": true,
+    "kind": "image",
+    "rights": "Screenshot of this site, captured with Playwright during the session named in the caption; site content © Paige Rattenberry, code MIT.",
+    "permission": "Paige's decision D5 (2026-09-30, IMPLEMENTATION_PLAN §3 S0-G): all of docs/screenshots/ ships in the public repository, where every screenshot was checked in S0-G; IMPLEMENTATION_PLAN §4 Session 8 asks for a screenshot gallery on /how-this-was-built. No people appear.",
+    "alt": "The career timeline and skills explorer on the Experience page after Session 5: a network of labelled skill nodes joined by lines, with Constellation and View as list buttons above it.",
+    "width": 1280,
+    "height": 800,
+    "provenance": {
+      "kind": "repository",
+      "source": "paigewebsite-repo",
+      "repository": "https://github.com/PaigeRattenberry/paigewebsite",
+      "sourceFile": "docs/screenshots/s5-experience-1280.png",
+      "revision": "7333ec654d05541ff54e83b4e46d663abdd3140b"
+    },
+    "transformations": [
+      "Cropped to 1280×800 px starting 300 px from the top of the full-page capture and re-encoded as WebP (quality 80) by scripts/derive-build-story-images.ts; the crop is listed in content/build-story.ts. The committed PNG is unchanged."
+    ]
+  },
+  {
+    "path": "images/build-story/s6b-home.webp",
+    "people": [],
+    "consent": true,
+    "kind": "image",
+    "rights": "Screenshot of this site, captured with Playwright during the session named in the caption; site content © Paige Rattenberry, code MIT.",
+    "permission": "Paige's decision D5 (2026-09-30, IMPLEMENTATION_PLAN §3 S0-G): all of docs/screenshots/ ships in the public repository, where every screenshot was checked in S0-G; IMPLEMENTATION_PLAN §4 Session 8 asks for a screenshot gallery on /how-this-was-built. No people appear.",
+    "alt": "The home page after Session 6b: the headline and buttons on the left and the skills constellation teaser on the right, labelled Fig. 1.",
+    "width": 1280,
+    "height": 800,
+    "provenance": {
+      "kind": "repository",
+      "source": "paigewebsite-repo",
+      "repository": "https://github.com/PaigeRattenberry/paigewebsite",
+      "sourceFile": "docs/screenshots/s6b-home-1280.png",
+      "revision": "7333ec654d05541ff54e83b4e46d663abdd3140b"
+    },
+    "transformations": [
+      "Cropped to 1280×800 px starting 0 px from the top of the full-page capture and re-encoded as WebP (quality 80) by scripts/derive-build-story-images.ts; the crop is listed in content/build-story.ts. The committed PNG is unchanged."
+    ]
+  }
+]

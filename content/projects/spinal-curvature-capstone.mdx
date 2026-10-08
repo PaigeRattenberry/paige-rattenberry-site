@@ -1,0 +1,114 @@
+---
+# Title, dates and bullets verbatim from the resume of record. The body (Session 4) is written
+# from the SFU article, the ICAMES deck and the final deck in _source/capstone (INVENTORY.md);
+# the decks are sources only and are not published. Every number in the body is a MetricStat
+# reference to a metric declared here.
+slug: spinal-curvature-capstone
+title: Adolescent Spinal Curvature Brace Optimization
+displayTitle: Measuring scoliosis brace pressure
+tagline: A wearable pressure-sensing system to guide scoliosis brace design
+proof: Originated the project and formed the six-person team. Best Overall Project at ICAMES 2022.
+year: 2022
+dates: Jan – Aug 2022
+periods:
+  - { start: "2022-01", end: "2022-08" }
+kind: project
+featured: true
+deepPage: true
+order: 3
+bullets:
+  - >-
+    Originated the project and formed the six-person team that built a wearable pressure-sensing
+    system (force-sensor array, noise-filtering firmware, real-time pressure heatmap on a CAD
+    torso model) to guide orthopedic brace design, following medical-device software standards
+    (IEC 62304).
+  - >-
+    Won Best Overall Project at ICAMES 2022 (Boğaziçi University, Istanbul), an international
+    engineering student competition; proposed an ML model trained on the system's pressure data
+    to predict curve progression as the next phase.
+skills: [embedded]
+metrics:
+  - value: six-person
+    label: capstone team size
+    source: resume-2026
+    note: The team's members are named in SFU's article on the project.
+links:
+  - kind: article
+    label: SFU School of Engineering Science article, 19 July 2022
+    url: https://www.sfu.ca/fas/news-events/news/2022/07/sfu-engineering-students-create-technology-to-optimize-brace-des.html
+resume:
+  include: true
+  bullets: []
+source: resume-2026
+---
+
+## The problem
+
+Adolescent idiopathic scoliosis is a sideways curve and twist of the spine that appears in late
+childhood or adolescence and accelerates while the child is still growing. The usual treatment
+for a progressing curve is a custom brace that presses on the torso to steer the spine straighter
+as it grows; when bracing fails, what remains is spinal fusion surgery.
+
+The brace itself is fitted by hand. An orthotist starts from an X-ray and body measurements,
+carves or generates a brace, trims it at a first fitting, then takes another X-ray with the brace
+on and adjusts from what it shows. Nothing in that loop measures how hard the brace presses, or
+where, so every adjustment rests on experience and the patient's report. Each iteration costs
+time and money, and a child can grow through the window in which a brace works best before the
+brace is right.
+
+<Diagram id="capstone-fitting-loop" number="1" />
+
+## How it started
+
+I went looking for a capstone that would combine medicine and engineering. Through my co-op
+program I had met an orthotist, and his vision of fitting braces from measured pressure rather
+than judgement became the project. I pitched it to classmates, and a <MetricStat value="six-person" />
+team formed around it, with the orthotist as our industry collaborator. SFU's School of
+Engineering Science wrote about the project in July 2022; the article, linked in the facts
+column, names the whole team and carries our photograph.
+
+## What we built
+
+The system is an instrument for the missing measurement: the pressure between torso and brace,
+read continuously and shown to the orthotist while the brace is being fitted.
+
+<Diagram id="capstone-pipeline" number="2" />
+
+- **A sensing garment.** A shirt carrying an array of force sensors, worn under the brace so
+  each sensor sits between torso and brace. A later revision replaced the discrete sensors with
+  sheets of pressure-sensitive material on a fixed grid, so the torso under the brace is covered
+  and every reading has a known position.
+- **Noise-filtering firmware.** The microcontroller samples every sensor repeatedly and averages
+  the readings before sending them over USB, which suppresses noise in the analog signal. The
+  team replaced a generic firmware library with its own, which scanned the sensors faster and
+  made temperature drift negligible.
+- **A real-time heatmap on a CAD torso.** A desktop application converts the readings to
+  pressure and paints them live onto a CAD model of a torso, with a legend, so the orthotist sees
+  where the brace presses hardest while the patient is wearing it. A capture is saved in a plain
+  spreadsheet format that design tools such as nTopology can import. The team was explicit that
+  the visualization validates the data and guides the fit; it does not diagnose.
+
+The software was built with medical-device software standards in mind, IEC 62304 for the
+software lifecycle among them, and the team's own analysis placed the device in Health Canada's
+lowest-risk, non-invasive class.
+
+## Results
+
+The team won Best Overall Project at ICAMES 2022, the International, Cultural, and Academic
+Meeting of Engineering Students, held at Boğaziçi University in Istanbul in May 2022. At the
+competition, presenting the project's potential future impact was my part. When SFU wrote about
+the project that July, the team's next milestone was a prototype that could be tested in clinic
+to begin collecting patient data.
+
+## What was proposed, not built
+
+The decks close with extensions, and they are only that. One was a topology-optimized, printed
+brace with openings for ultrasound, so that check-ins could happen more often without X-rays.
+The other was a machine-learning model trained on the pressure data the system collects, to
+predict curve severity and progression and to suggest brace designs. Neither was built during
+the capstone; the pressure-sensing system above is what exists.
+
+## Sources
+
+This page draws on the team's competition and final presentations and on SFU's news article.
+The presentations are not published here, and every figure on this page is an original drawing.

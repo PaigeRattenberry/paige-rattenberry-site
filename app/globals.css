@@ -1,0 +1,653 @@
+@import "tailwindcss";
+
+/*
+  Design tokens (DESIGN.md §4). The light palette lives on :root; dark tokens live under
+  [data-theme="dark"] ONLY. next-themes owns that attribute and applies the OS preference
+  itself, so there is deliberately no prefers-color-scheme media query here: one would
+  override a visitor's explicit light choice on a dark OS.
+*/
+:root {
+  color-scheme: light;
+
+  --paper: #f5f4ef; /* page background: cool off-white paper */
+  --surface: #fbfaf7; /* cards, panels */
+  --surface-2: #edebe4; /* code, tags, subtle fills */
+  --ink: #1a1c1f; /* primary text */
+  --ink-2: #605c55; /* secondary text, warm gray */
+  --ink-3: #6d685f; /* muted labels; AA on paper, surface and surface-2 (4.6:1 worst case) */
+  --line: #d9d6ce; /* hairline borders */
+  --line-2: #c4c0b6; /* stronger rules */
+  --accent: #0e6b6b; /* deep teal: links, focus, motif */
+  --accent-2: #0a5252; /* hover */
+  --accent-soft: #dcecea; /* accent tint fills */
+  --on-accent: #f5f4ef;
+  --contour-opacity: 0.3;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --paper: #12171c; /* deep slate */
+  --surface: #181e24;
+  --surface-2: #212930;
+  --ink: #ece9e1;
+  --ink-2: #a7a299;
+  --ink-3: #979289; /* AA on paper, surface and surface-2 (4.8:1 worst case) */
+  --line: #2a3139;
+  --line-2: #3a424b;
+  --accent: #45c7be; /* bright teal */
+  --accent-2: #7bdcd4;
+  --accent-soft: #163a3a;
+  --on-accent: #0e1418;
+  --contour-opacity: 0.24;
+}
+
+/* Tailwind's dark: variant follows the attribute, not the media query. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --color-*: initial;
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-display: var(--font-source-serif), "Source Serif 4", Georgia, "Times New Roman", serif;
+  /* The two extras faces (app/layout.tsx) come first: --font-inter carries its metric-matched
+     Arial fallback, which would otherwise supply a "ć" before a later family could. Their
+     unicode-range leaves out the space, so neither is ever the primary font of a line. */
+  --font-body:
+    var(--font-inter-latin-ext), var(--font-inter-greek), var(--font-inter), Inter, system-ui,
+    -apple-system, "Segoe UI", sans-serif;
+  /* The mono extras face leads its stack the same way (Session 8). */
+  --font-mono:
+    var(--font-mono-latin-ext), var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace,
+    "Cascadia Mono", Consolas, monospace;
+
+  --container-content: 72rem; /* DESIGN §4.4 content width: max-w-content */
+  /* max-w-* resolves --max-width before --container, and Tailwind ships --max-width-prose: 65ch,
+     so the prose width must be set on this key to win. */
+  --max-width-prose: 42rem; /* DESIGN §4.4 prose width: max-w-prose */
+
+  --radius-sm: 0.1875rem;
+  --radius-md: 0.375rem;
+
+  --ease-editorial: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@layer base {
+  html {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    /* Percentage, not px: a reader who raised their browser default font size keeps it. */
+    font-size: 106.25%; /* 17px at the 16px default */
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--paper);
+    color: var(--ink);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+
+  h1 {
+    letter-spacing: -0.025em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-decoration-thickness: from-font;
+    text-underline-offset: 0.15em;
+  }
+
+  ::selection {
+    background-color: var(--accent-soft);
+    color: var(--ink);
+  }
+
+  /* Visible focus everywhere, one accent (DESIGN §4.2, §8). */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
+
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+}
+
+@layer components {
+  /* Skip link: visually hidden until focused. */
+  .skip-link {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    padding: 0.5rem 0.875rem;
+    background-color: var(--accent);
+    color: var(--on-accent);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    border-radius: var(--radius-sm);
+    transform: translateY(-200%);
+    transition: transform 150ms var(--ease-editorial);
+  }
+  .skip-link:focus-visible {
+    transform: translateY(0);
+    outline-offset: 2px;
+  }
+
+  /* Small monospace data label (dates, metrics, tags, figure numbers). */
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    color: var(--ink-2);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Link styles are utilities (not plain component classes) so variants such as
+   [&_a]:link-accent compose with them; Tailwind 4 only stacks variants on utilities. */
+@utility link-quiet {
+  text-decoration: none;
+  transition: color 150ms var(--ease-editorial);
+  &:hover {
+    color: var(--accent);
+  }
+}
+
+@utility link-accent {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--accent) 45%, transparent);
+  transition:
+    color 150ms var(--ease-editorial),
+    text-decoration-color 150ms var(--ease-editorial);
+  &:hover {
+    color: var(--accent-2);
+    text-decoration-color: currentColor;
+  }
+}
+
+/* Header width is measured in its own font size, so enlarged text retains the menu. Every nav
+   link fits inline from ~57em (measured at 1x text); below 60em the disclosure lists them. */
+.header-shell {
+  container-type: inline-size;
+}
+.nav-inline {
+  display: none;
+}
+@container (min-width: 60em) {
+  .nav-inline {
+    display: flex;
+  }
+  .nav-disclosure {
+    display: none;
+  }
+}
+
+/* Session 4 figures. A flow diagram is an ordered list: numbered markers on a hairline
+   connector, top to bottom; a short linear flow turns across the column from md up. The IoU
+   plot's lines are drawn in SVG with non-scaling strokes; all of its text is HTML. */
+@layer components {
+  .flow {
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+    display: grid;
+    row-gap: 1.1rem;
+  }
+  .flow-step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.75rem 1fr;
+    column-gap: 0.8rem;
+    row-gap: 0.2rem;
+    align-items: start;
+  }
+  .flow-marker {
+    grid-row: 1 / span 2;
+    display: inline-flex;
+    width: 1.75rem;
+    height: 1.75rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line-2);
+    border-radius: 9999px;
+    background-color: var(--surface);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-2);
+    font-variant-numeric: tabular-nums;
+  }
+  .flow-title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    line-height: 1.3;
+    color: var(--ink);
+    padding-top: 0.2rem;
+  }
+  .flow-detail {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  /* The connector runs from one marker down to the next; the last step has nothing below it
+     unless the flow loops, in which case it reaches the return note. */
+  .flow-step::before {
+    content: "";
+    position: absolute;
+    left: calc(0.875rem - 0.5px);
+    top: 1.75rem;
+    bottom: -1.1rem;
+    width: 1px;
+    background-color: var(--line-2);
+  }
+  .flow-step:last-child::before {
+    display: none;
+  }
+  /* Indented to the step titles by a utility on the element (pl-[2.55rem]!): prose's li
+     padding utility outranks a padding set here. */
+  .flow-return {
+    color: var(--ink-3);
+  }
+  @media (min-width: 48rem) {
+    .flow-across {
+      grid-template-columns: repeat(var(--flow-cols, 4), minmax(0, 1fr));
+      column-gap: 1.25rem;
+      row-gap: 0;
+    }
+    .flow-across .flow-step {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto 1fr;
+      row-gap: 0.3rem;
+    }
+    .flow-across .flow-marker {
+      grid-row: 1;
+      margin-bottom: 0.35rem;
+    }
+    .flow-across .flow-step::before {
+      top: calc(0.875rem - 0.5px);
+      left: 1.75rem;
+      right: -1.25rem;
+      bottom: auto;
+      height: 1px;
+      width: auto;
+    }
+  }
+
+  .iou-grid {
+    stroke: var(--line);
+    stroke-width: 1px;
+  }
+  .iou-marker {
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--surface);
+    transform: translate(-50%, -50%);
+  }
+  .iou-marker-peak {
+    width: 0.7rem;
+    height: 0.7rem;
+  }
+}
+
+/* MetricStat (DESIGN §3.3): a number, a small source button, and its tooltip. Component
+   classes rather than utilities because every metric is serialised twice (HTML + RSC). */
+@layer components {
+  .metric-value {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+
+  .metric-button {
+    position: relative;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25em;
+    height: 1.25em;
+    margin-inline: 0.15em;
+    transform: translateY(-0.4em);
+    border: 1px solid var(--line);
+    border-radius: 9999px;
+    font-family: var(--font-mono);
+    font-size: 0.68em;
+    line-height: 1;
+    color: var(--ink-3);
+    cursor: help;
+    transition:
+      color 150ms var(--ease-editorial),
+      border-color 150ms var(--ease-editorial);
+  }
+  /* Hit area larger than the glyph without changing the visual. */
+  .metric-button::before {
+    content: "";
+    position: absolute;
+    inset: -0.6em;
+  }
+  .metric-button:hover,
+  .metric-button:focus-visible {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* Positioned from the number's left edge; MetricTooltips sets --metric-shift when that would
+     cross the viewport edge. Hoverable (no pointer-events: none) so the pointer can move onto
+     it, and dismissible with Escape via [data-dismissed] (WCAG 1.4.13). */
+  .metric-tooltip {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: var(--metric-shift, 0);
+    z-index: 20;
+    margin-top: 0.375rem;
+    width: 16rem;
+    max-width: calc(100vw - 2rem);
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background-color: var(--surface);
+    color: var(--ink-2);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1.35;
+    text-align: left;
+  }
+  /* Bridges the gap above the tooltip so moving the pointer onto it keeps .metric:hover. */
+  .metric-tooltip::before {
+    content: "";
+    position: absolute;
+    inset-inline: -1px;
+    bottom: 100%;
+    height: calc(0.375rem + 2px);
+  }
+  .metric:hover .metric-tooltip,
+  .metric:focus-within .metric-tooltip {
+    display: block;
+  }
+  .metric[data-dismissed] .metric-tooltip {
+    display: none;
+  }
+}
+
+/* Session 5 explorer (DESIGN §7.2). The constellation is drawn once from precomputed positions;
+   its marks take a neutral ramp and the one accent, and every transition is 150–200 ms opacity
+   or colour only, switched off under prefers-reduced-motion. State comes from data attributes
+   the island sets, so the server-rendered fallback and the hydrated island share one style. */
+@layer components {
+  .constellation {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+  /* Edges are bare <line>s under one group (the compact teaser: one <path> per stroke width),
+     so neither carries a per-edge class. No stroke-width here: every edge carries its weight's
+     width as an attribute, and any author rule outranks an SVG presentation attribute. */
+  .constellation-edges > :is(line, path) {
+    fill: none;
+    stroke: var(--line-2);
+    stroke-opacity: 0.85;
+    stroke-linecap: round;
+    transition:
+      stroke 150ms var(--ease-editorial),
+      stroke-opacity 150ms var(--ease-editorial);
+  }
+  .constellation-edges > line[data-state="lit"] {
+    stroke: var(--accent);
+    stroke-opacity: 0.8;
+  }
+  .constellation-edges > line[data-state="dim"] {
+    stroke-opacity: 0.3;
+  }
+  .constellation-node {
+    cursor: default;
+    outline: none;
+  }
+  .constellation-node[role="button"] {
+    cursor: pointer;
+  }
+  .constellation-dot {
+    fill: var(--surface-2);
+    stroke: var(--ink-3);
+    stroke-width: 1.25;
+    transition:
+      fill 150ms var(--ease-editorial),
+      stroke 150ms var(--ease-editorial),
+      opacity 150ms var(--ease-editorial);
+  }
+  .constellation-label {
+    fill: var(--ink-2);
+    pointer-events: none;
+    transition: opacity 150ms var(--ease-editorial);
+  }
+  .constellation-node[data-state="active"] .constellation-dot {
+    fill: var(--accent);
+    stroke: var(--accent);
+  }
+  .constellation-node[data-state="active"] .constellation-label {
+    fill: var(--ink);
+    font-weight: 500;
+  }
+  .constellation-node[data-state="near"] .constellation-dot {
+    fill: var(--accent-soft);
+    stroke: var(--accent);
+  }
+  .constellation-node[data-state="near"] .constellation-label {
+    fill: var(--ink);
+  }
+  .constellation-node[data-state="dim"] .constellation-dot,
+  .constellation-node[data-state="dim"] .constellation-label {
+    opacity: 0.35;
+  }
+  .constellation-node:hover .constellation-dot,
+  .constellation-node:focus-visible .constellation-dot {
+    stroke: var(--accent);
+  }
+  /* SVG has no outline box; the focus ring is a second stroke on the dot. */
+  .constellation-node:focus-visible .constellation-dot {
+    stroke-width: 3;
+    stroke: var(--accent);
+  }
+  /* Labels shrink with the picture; below 40rem the caption under the graph names the node. */
+  @media (max-width: 40rem) {
+    .constellation-label {
+      display: none;
+    }
+  }
+  .constellation-frame {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background-color: var(--surface);
+    padding: 0.75rem 0.75rem 0.6rem;
+  }
+  .constellation-teaser {
+    border: 1px solid var(--line);
+    background-color: var(--surface);
+    padding: 0.75rem;
+    transition: border-color 150ms var(--ease-editorial);
+  }
+  .constellation-teaser:hover {
+    border-color: var(--accent);
+  }
+
+  /* The timeline: one rail on the left with a marker per entry; the year sits on the rail. */
+  /* Session 7: /experience is the site's longest page, and laying it all out (three times:
+     first paint, font swap, the explorer's hydration) was its largest main-thread cost, about
+     two thirds of it for content far below the fold. `content-visibility: auto` lets the browser
+     skip layout and paint for a block until it nears the viewport; the content stays in the DOM,
+     the accessibility tree, find-in-page and anchor navigation. It implies paint containment,
+     which would clip a metric tooltip that opens past a block's edge, so it is only applied
+     where `overflow-clip-margin` can widen the clip (the tooltip is 16rem). A block skipped
+     *above* an in-page anchor target can move it: a skipped block has an estimated height, and
+     with the timeline's year groups skipped, /experience#hammerspace landed up to 2,600 px off.
+     The Roles and Education sections hold the targets themselves, and scrolling to a target
+     inside a skipped block lays that block out first. Roles does sit above #education, and that
+     anchor lands too, but only the test says so (tests/e2e/explorer.spec.ts): any other block
+     above a target is unproven until an anchor test covers it.
+     The intrinsic size is a first estimate; `auto` remembers the real one once rendered. */
+  @supports (overflow-clip-margin: 1px) {
+    .render-when-near {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 40rem;
+      overflow-clip-margin: 20rem;
+    }
+  }
+
+  .timeline {
+    list-style: none;
+    margin: 0.75rem 0 0;
+    padding: 0;
+  }
+  .timeline-year {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    column-gap: 1rem;
+  }
+  .timeline-year::before {
+    content: "";
+    position: absolute;
+    left: calc(3.5rem + 1rem - 0.5px);
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: var(--line-2);
+  }
+  .timeline-year-label {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    padding-top: 1.35rem;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+  .timeline-entries {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .timeline-entry {
+    position: relative;
+    padding: 1.25rem 0 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .timeline-entry::before {
+    content: "";
+    position: absolute;
+    left: -0.3rem;
+    top: 1.75rem;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 9999px;
+    background-color: var(--paper);
+    border: 1px solid var(--ink-3);
+    transition:
+      background-color 150ms var(--ease-editorial),
+      border-color 150ms var(--ease-editorial);
+  }
+  .timeline-entry[data-match="true"]::before {
+    background-color: var(--accent);
+    border-color: var(--accent);
+  }
+  /* Dimmed entries keep full opacity; their text turns --ink-3 (see the unlayered rule at the
+     end of this file) and the rail marker goes hollow. */
+  .timeline-entry[data-match="false"]::before {
+    border-color: var(--line-2);
+  }
+  @media (max-width: 40rem) {
+    .timeline-year {
+      grid-template-columns: 2.5rem 1fr;
+      column-gap: 0.75rem;
+    }
+    .timeline-year::before {
+      left: calc(2.5rem + 0.75rem - 0.5px);
+    }
+    .timeline-entry {
+      padding-left: 1rem;
+    }
+  }
+
+  /* Reduced motion switches off every explorer transition, and the metric source button's
+     (which sits inside timeline entries and everywhere else a number appears). */
+  @media (prefers-reduced-motion: reduce) {
+    .constellation-edges > :is(line, path),
+    .constellation-dot,
+    .constellation-label,
+    .constellation-teaser,
+    .timeline-entry::before,
+    .metric-button {
+      transition: none;
+    }
+  }
+}
+
+/* Dimmed timeline entries (a filter is on and the entry lacks the skill) stay AA-readable:
+   every text in them takes --ink-3, which the palette keeps at 4.5:1+ on paper and surfaces,
+   instead of an opacity that would blend the small mono text below contrast. Unlayered so it
+   outranks the text-ink / text-ink-2 utilities on the spans. */
+.timeline-entry[data-match="false"]
+  :is(p, span, a, button):not(.metric-tooltip, .metric-tooltip *) {
+  color: var(--ink-3);
+}
+/* The title link keeps its hover and focus colour, its only affordance besides the cursor. */
+.timeline-entry[data-match="false"] a:is(:hover, :focus-visible) {
+  color: var(--accent);
+}

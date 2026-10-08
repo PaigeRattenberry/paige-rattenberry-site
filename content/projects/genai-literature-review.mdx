@@ -1,0 +1,131 @@
+---
+# Title, date, summary, skills and the one metric come from the "genai-literature-review" item in
+# content/research.ts through `researchId`, and may not be retyped here. The body (Session 6b) is
+# written from the review itself, which ships whole as the linked PDF (Paige, 2026-09-15). Every
+# framework it describes is its cited authors' work; the body names none of their organisations
+# or venues, carries no figure (the review's figures are reproduced from the papers it cites) and
+# types no numeral except the date: the reference count is a MetricStat.
+slug: genai-literature-review
+researchId: genai-literature-review
+displayTitle: GenAI failure modes, a literature review
+tagline: Hallucination, misgeneralization, bias and adversarial attacks, and what interpretability offers against them
+kind: research
+featured: false
+deepPage: true
+links:
+  - kind: pdf
+    label: Literature review PDF
+    url: /docs/paige-rattenberry-genai-interpretability-review-2024.pdf
+resume:
+  include: true
+  bullets: []
+---
+
+## Why I wrote it
+
+I wrote this review in April 2024. Generative AI was moving into banking, healthcare,
+autonomous systems and connected devices, and the models underneath it were black boxes: nobody
+could say in advance how one would react to an input it had not seen, which means failures and
+unwanted biases arrive without warning. The review asks what interpretability research had to
+offer against that, and how much of it was in use.
+
+It is a literature review, a single-author survey that draws on <MetricStat value="14" /> papers.
+Every framework described below is the work of the authors the review cites. What is mine is
+the reading, the synthesis and the conclusion. The full text, with its reference list, is linked
+in the facts column.
+
+## The failure modes
+
+The review starts from the ways these systems go wrong. It names hallucination,
+misgeneralization and bias. Prompt injection manipulates a language model into
+unintended actions or malicious output, and the review calls it a growing concern as more
+applications are built on those models. Deepfakes and disinformation threaten whole information
+ecosystems with content that is convincing and fabricated. Confidential data leakage sits beside
+them in the conclusion's list of threats.
+
+Its argument is that deploying these models calls for governance and responsible-AI practice
+whose defences are robust, comprehensive and multi-faceted, and that evolve alongside frontier
+AI. Interpretability and explainability are where the review looks for that.
+
+## Interpretability and explainability
+
+The review separates the terms. Interpretability, as it uses the word, is the extent to which
+cause and effect can be observed in a system: a user can follow the model's reasoning and
+verify that it is making decisions for the right reasons, which is what trust and debugging
+need. Explainability is the ability to describe a system's internal mechanics, parameters and
+architecture, which is what improving a model needs.
+
+That is the distinction I used then; the review states it without citing a source for it.
+Other literatures use the same words the other way round, with interpretability meaning the
+study of a model's internals. The distinction matters more than the labels: checking that a
+system is right for the right reasons is a different job from describing its machinery, and a
+method can do one without the other.
+
+The review also states the tension plainly, from a chart in one of the surveys it cites: the
+model families that are easiest to explain, such as decision trees, have the lowest predictive
+performance, and deep networks are the reverse. Another of its surveys found that explainable
+AI lacked uniform measurements and evaluation procedures, which is the thread the conclusion
+picks up.
+
+## What the field was proposing
+
+The rest of the review reports what researchers were proposing at the time. In the order the
+review takes them:
+
+- A defence framework against deepfakes, misinformation and disinformation that combines
+  detection algorithms, cross-platform collaboration and policy with multi-modal analysis,
+  digital watermarking and machine-learning-based authentication.
+- INTERACTION, a generative explanation framework for natural-language inference that first
+  explains and predicts a label, then generates diverse evidence, because a single explanation
+  does not account for the variety in how people reason in language.
+- SVEAD, which compresses data with a variational autoencoder, combines an ensemble of anomaly
+  detectors, and explains the result with SHAP, permutation importance and individual
+  conditional expectations.
+- An evaluation framework for an application's resilience to prompt injection. Simulated attacks
+  are chosen for coverage and relevance, a second language model assesses each response and
+  returns a confidence score with an explanation, which a conventional malicious-content
+  classifier cannot do, and attacks are weighted by impact into one resilience score. Its authors
+  found newer models more resilient than older ones, and needed only small adjustments to
+  take in new kinds of attack.
+- Galeras, a benchmarking strategy for language models that write code. Earlier benchmarks
+  compared generated code with expected code and ignored confounders such as lines of code,
+  token count and prompt size; evaluating with causal inference reduced that bias.
+- xAI-GAN, which uses explanation systems to change how a generative adversarial network is
+  trained, so that the generator gets richer feedback on why the discriminator decided as it
+  did.
+- SAFE, for counterfactual explanations in safety-critical settings. Generative counterfactual
+  models had been altering features a user selected, which may sit nowhere near the decision
+  boundary and so defeat the purpose of a counterfactual; SAFE uses saliency maps to change only
+  the regions that decide the output.
+- CureNet, a clinician-in-the-loop explanation tool that combines deep-learning models, a
+  fine-tuned language model and attribution methods (Integrated Gradients, layer-wise relevance
+  propagation, DeepLift) to draw heatmaps of the regions behind a diagnosis.
+- A diagnostic framework that pairs Markov logic networks, for medical reasoning a person can
+  read, with knowledge extracted by language models and a search engine.
+- Group Additive Gaussian Processes, an interpretable model for tracking economic indicators
+  from social-media data, with calibrated uncertainty on its predictions.
+- FCEN, a fuzzy network for reinforcement learning that writes an agent's state-to-action
+  mappings as if-then rules and adds a generative model to visualize what the agent has
+  learned, explaining its decision logic both globally and for a single decision.
+
+## Where it fell short
+
+The review's own verdict is that none of these methods had been widely deployed in practice,
+and that a great deal of research was still to be done. Along the way it records that the
+field had no uniform way to measure an explanation, and, from the causal-inference work, that
+the benchmarks used to measure the models could themselves be confounded by the way the test
+was built.
+
+## What I took from it
+
+The review ends in a position. Before generative models are trusted with problems that matter,
+standardized interpretability and explainability metrics need to be implemented and rigorously
+followed, with the assessment criteria weighted differently for different application
+industries and types of model. It names safety-critical and high-reliability systems as the
+place this matters most, because that is where a model that predicts wrongly, or is jailbroken,
+could lead to catastrophic outcomes.
+
+My [honours thesis](/projects/interpretable-medical-imaging-thesis) had reached the same place
+from the other side: an explanation method has to be scored before it is trusted. The review
+is where I found that the rest of the field was short of the same thing, an agreed way to
+measure.
