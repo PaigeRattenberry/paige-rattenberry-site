@@ -7,14 +7,16 @@ follow-up used Codex.
 
 ![The home page at 1280 px: Paige Rattenberry's name, the positioning line, the Explore projects, Get in touch and Resume actions, and the skills constellation as Fig. 1](./docs/screenshots/s8-home-1280.png)
 
-**Status:** every planned session is built: Home, About, Experience with its timeline and skills
-explorer, Projects with four deep pages (StimMap3D with a click-to-load live demo), Research,
-Leadership, the resume PDF generated from `content/`, SEO and Open Graph images, the three CI
-gates (build and tests, axe, Lighthouse), the publication gate, and `/how-this-was-built`, which
-renders every build log, a pre-launch history snapshot and a synthesis of what the AI got wrong
-and what caught it. Session 9 updated the content before launch, and Session 9b made three small
-fixes. The record of each session is in [`docs/build-log/`](./docs/build-log/), and the launch
-steps are in `IMPLEMENTATION_PLAN.md` §6.
+**Status:** live at <https://paigerattenberry.vercel.app> since 2026-10-08. Every planned session is
+built: Home, About, Experience with its timeline and skills explorer, Projects with four deep pages
+(StimMap3D with a click-to-load live demo), Research, Leadership, the resume PDF generated from
+`content/`, SEO and Open Graph images, the three CI gates (build and tests, axe, Lighthouse), the
+publication gate, and `/how-this-was-built`, which renders every build log, a pre-launch history
+snapshot and a synthesis of what the AI got wrong and what caught it. Session 9 updated the content
+before launch, and Session 9b made three small fixes. The record of each session is in
+[`docs/build-log/`](./docs/build-log/), and the launch steps are in `IMPLEMENTATION_PLAN.md` §6.
+This repository was seeded at launch from the reviewed pre-launch tree, so its own history starts
+there; `/how-this-was-built` reports the pre-launch history from a committed snapshot.
 
 ## Stack
 
@@ -89,15 +91,14 @@ project's production hostname.
 ## Deployment
 
 Use `npm run build` for Vercel builds, so `prebuild` runs: it checks the committed explorer layout
-and font files and renders the resume PDF. No build calls the GitHub API, and Vercel needs no
-token: the history counts on `/how-this-was-built` are a committed snapshot. Vercel builds every
-push. **Until launch step L7 there is deliberately no production deployment**: the
-production branch is `launch` (which is never pushed to) and production builds are skipped, so
-`paigerattenberry.vercel.app` returns `404 DEPLOYMENT_NOT_FOUND` while the site is being built. Every
-branch, `main` included, deploys as a preview that requires a Vercel login and carries
-`X-Robots-Tag: noindex` — that is how the site stays private and unsearchable before launch. The
-reasoning and the exact settings are in `IMPLEMENTATION_PLAN.md` §3 S0-E, and the launch steps
-(§6) reverse two of them after Vercel is re-pointed at the public repository.
+and font files and renders the resume PDF. No build calls the GitHub API, and Vercel needs no token:
+the history counts on `/how-this-was-built` are a committed snapshot. Vercel builds every push. The
+production branch is `main`: a push to `main` deploys <https://paigerattenberry.vercel.app>, which
+is public and indexable. Every other branch deploys as a preview that requires a Vercel login and
+carries `X-Robots-Tag: noindex`, so a pull request's preview is for review only. Before launch,
+production builds were switched off entirely so the site stayed private while it was built; launch
+step L7 turned them back on. The reasoning and the exact settings are in `IMPLEMENTATION_PLAN.md` §3
+S0-E and §6.
 
 ## Planning documents
 
