@@ -31,3 +31,21 @@ export function absoluteUrl(path: string): string {
 
 /** The origin as printed on the resume: no scheme, no trailing slash. */
 export const siteHost = SITE_URL.replace(/^https?:\/\//, "");
+
+/**
+ * Google Search Console's HTML-tag verification token (the `content` value of the
+ * `google-site-verification` meta tag it hands out), read at build time from
+ * `GOOGLE_SITE_VERIFICATION`, which is set in Vercel rather than committed, so a new property
+ * (a custom domain, say) needs no code change. Unset, no tag is emitted. The root layout puts it
+ * in `metadata.verification`. A pasted whole tag fails the build here instead of shipping a
+ * broken one.
+ */
+const googleToken = process.env.GOOGLE_SITE_VERIFICATION?.trim();
+
+if (googleToken && !/^[A-Za-z0-9_-]+$/.test(googleToken)) {
+  throw new Error(
+    'GOOGLE_SITE_VERIFICATION must be the token alone (the content="…" value), not the whole meta tag',
+  );
+}
+
+export const googleSiteVerification = googleToken || undefined;
