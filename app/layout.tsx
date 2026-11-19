@@ -7,7 +7,7 @@ import { Header } from "@/components/layout/Header";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { MetricTooltips } from "@/components/ui/MetricTooltips";
 import { profile } from "@/lib/content/load";
-import { SITE_URL } from "@/lib/site";
+import { googleSiteVerification, SITE_URL } from "@/lib/site";
 
 /**
  * The three families of DESIGN §4.1, from the files scripts/build-fonts.mjs writes to app/fonts/
@@ -107,6 +107,7 @@ export const metadata: Metadata = {
     locale: "en_CA",
   },
   twitter: { card: "summary_large_image" },
+  verification: googleSiteVerification ? { google: googleSiteVerification } : undefined,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

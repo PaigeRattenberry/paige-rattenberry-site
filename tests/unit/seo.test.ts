@@ -35,3 +35,32 @@ describe("SITE_URL", () => {
     await expect(siteWith("example.com")).rejects.toThrow(/must be an origin/);
   });
 });
+
+describe("googleSiteVerification", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    vi.resetModules();
+  });
+
+  async function siteWith(value: string) {
+    vi.resetModules();
+    vi.stubEnv("GOOGLE_SITE_VERIFICATION", value);
+    return import("@/lib/site");
+  }
+
+  it("is undefined when unset or blank, so no tag is emitted", async () => {
+    expect((await siteWith("")).googleSiteVerification).toBeUndefined();
+    expect((await siteWith("   ")).googleSiteVerification).toBeUndefined();
+  });
+
+  it("passes a token through, trimmed", async () => {
+    const site = await siteWith(" aBc-123_XyZ \n");
+    expect(site.googleSiteVerification).toBe("aBc-123_XyZ");
+  });
+
+  it("rejects a pasted meta tag", async () => {
+    await expect(
+      siteWith('<meta name="google-site-verification" content="aBc-123" />'),
+    ).rejects.toThrow(/token alone/);
+  });
+});

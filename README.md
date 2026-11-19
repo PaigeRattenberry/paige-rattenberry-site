@@ -100,6 +100,10 @@ production builds were switched off entirely so the site stayed private while it
 step L7 turned them back on. The reasoning and the exact settings are in `IMPLEMENTATION_PLAN.md` §3
 S0-E and §6.
 
+Google Search Console verifies the site through an HTML tag. Its token is the Vercel environment
+variable `GOOGLE_SITE_VERIFICATION` (Production), not a committed value; the root layout emits the
+`google-site-verification` tag only when it is set, and a redeploy picks up a new value.
+
 ## Planning documents
 
 - [`DESIGN.md`](./DESIGN.md) — decisions, site map, content model, visual direction, architecture, quality bar.

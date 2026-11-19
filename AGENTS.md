@@ -235,8 +235,11 @@ preview (`noindex`) or at `/resume` (a redirect).
   share the page's canonical URL). `app/sitemap.ts` and `app/robots.ts` derive from
   `htmlRoutes`; `app/opengraph-image.tsx` and `app/projects/[slug]/opengraph-image.tsx` render
   `lib/og/card.tsx` with the site's fonts (`lib/og/fonts.ts`), prerendered at build; the home
-  page carries a schema.org Person from `personJsonLd()`. `app/favicon.ico` is the icon SVG
-  rasterised once with sharp (CSS variables substituted); regenerate it if the icon changes.
+  page carries a schema.org Person from `personJsonLd()`. The root layout emits Google Search
+  Console's `google-site-verification` tag only when the Vercel variable
+  `GOOGLE_SITE_VERIFICATION` is set (`lib/site.ts`); the token is never committed.
+  `app/favicon.ico` is the icon SVG rasterised once with sharp (CSS variables substituted);
+  regenerate it if the icon changes.
 - **Metrics:** measured results, rankings and substantive counts are `{ value, label, source, note? }` stored next to the text that
   contains it, and rendered through `MetricStat` (usually via `TextWithMetrics`, which wraps each
   value in a verbatim sentence). Source ids need a reader-facing label in `content/sources.ts`,
