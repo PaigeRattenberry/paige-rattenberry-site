@@ -232,8 +232,11 @@ preview (`noindex`) or at `/resume` (a redirect).
   Its page leaves out an empty `## Paige's review notes` heading (Session 9b); the file keeps it.
 - **SEO (Session 6):** `metadataBase` and every absolute URL come from `lib/site.ts`; each page
   wraps its metadata in `canonical(path, …)` from `lib/seo.ts` (bare path, so filtered views
-  share the page's canonical URL). `app/sitemap.ts` and `app/robots.ts` derive from
-  `htmlRoutes`; `app/opengraph-image.tsx` and `app/projects/[slug]/opengraph-image.tsx` render
+  share the page's canonical URL). It sets no `openGraph` field, not even `og:url`: segments
+  merge shallowly, so a page's `openGraph` would replace the layout's and drop the inherited
+  image. `app/sitemap.ts` and `app/robots.ts` derive from
+  `htmlRoutes`; `app/opengraph-image.tsx`, `app/projects/[slug]/opengraph-image.tsx` and
+  `app/how-this-was-built/opengraph-image.tsx` (shared by the log pages) render
   `lib/og/card.tsx` with the site's fonts (`lib/og/fonts.ts`), prerendered at build; the home
   page carries a schema.org Person from `personJsonLd()`. The root layout emits Google Search
   Console's `google-site-verification` tag only when the Vercel variable

@@ -1,6 +1,23 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { jsonLdHtml } from "@/lib/seo";
+import { canonical, jsonLdHtml } from "@/lib/seo";
+
+describe("canonical", () => {
+  it("sets the canonical link to the bare path and keeps the page's own fields", () => {
+    const meta = canonical("/about", { title: "About", description: "About Paige" });
+    expect(meta.title).toBe("About");
+    expect(meta.description).toBe("About Paige");
+    expect(meta.alternates?.canonical).toBe("/about");
+  });
+
+  // Segments merge shallowly: a page that sets either key replaces the layout's whole value,
+  // which drops the inherited Open Graph image or the Search Console verification tag.
+  it("sets neither openGraph nor verification, so the layout's reach every page", () => {
+    const meta = canonical("/projects", { title: "Projects" });
+    expect(meta).not.toHaveProperty("openGraph");
+    expect(meta).not.toHaveProperty("verification");
+  });
+});
 
 describe("jsonLdHtml", () => {
   it("escapes every < so a value cannot close the script element", () => {

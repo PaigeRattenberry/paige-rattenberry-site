@@ -72,6 +72,7 @@ export const buildStory: BuildStory = {
       "goal, what shipped, decisions, tools, and what the AI got wrong and how it was caught",
     gallery:
       "Each session that changed the interface saved screenshots of its pages to docs/screenshots/. A few, cropped to the first screen, show how the site changed.",
+    ogCard: "Who did what, a log for every session, and what the AI got wrong.",
   },
 
   transparency: {

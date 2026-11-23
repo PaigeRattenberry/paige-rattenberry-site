@@ -583,6 +583,11 @@ export const BuildStorySchema = z.strictObject({
     /** Each log page's meta description, after its title and date: sections every log has. */
     logDescription: z.string().min(1),
     gallery: z.string().min(1),
+    /**
+     * The line under the title on this page's Open Graph card, which the log pages share. No
+     * count: a picture cannot carry the synthesis's bound, so the numbers stay on the page.
+     */
+    ogCard: z.string().min(1),
   }),
   transparency: z.strictObject({
     generated: z.array(z.string().min(1)).min(1),

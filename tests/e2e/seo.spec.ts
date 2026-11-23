@@ -8,7 +8,8 @@ import { htmlRoutes, routes } from "../../lib/routes";
 /**
  * Session 6 (DESIGN §5.2, §5.4, §5.5) against the production build: the /resume redirect and
  * the PDF behind it, the sitemap, robots.txt, the Open Graph images, and one title, description,
- * canonical URL and Open Graph image per page (the root image must reach every child page).
+ * canonical URL and Open Graph image per page (the root image must reach every page that has
+ * no nearer one).
  * The site origin in the built output is whatever NEXT_PUBLIC_SITE_URL was at build time, so
  * URLs are compared by path.
  */
@@ -78,7 +79,11 @@ test.describe("sitemap and robots", () => {
 });
 
 test.describe("Open Graph images", () => {
-  for (const path of ["/opengraph-image", "/projects/stimmap3d/opengraph-image"]) {
+  for (const path of [
+    "/opengraph-image",
+    "/projects/stimmap3d/opengraph-image",
+    "/how-this-was-built/opengraph-image",
+  ]) {
     test(`${path} is a 1200 × 630 PNG`, async ({ request }) => {
       const response = await request.get(path);
       expect(response.ok()).toBe(true);
@@ -114,11 +119,21 @@ test.describe("per-page metadata", () => {
       expect(title, route.path).toContain(profile.name);
       expect(description, route.path).toBeTruthy();
       expect(canonical && pathOf(canonical), route.path).toBe(route.path);
+      // The layout's Open Graph fields reach every page (segments merge shallowly, so a page
+      // that set any openGraph field would lose these and its inherited image).
+      expect(meta("og:type"), route.path).toBe("website");
+      expect(meta("og:site_name"), route.path).toBe(profile.name);
+      expect(meta("og:locale"), route.path).toBe("en_CA");
       expect(twitterCard, route.path).toBe("summary_large_image");
       expect(ogImage && pathOf(ogImage), route.path).toMatch(/\/opengraph-image$/);
       expect(twitterImage && pathOf(twitterImage), route.path).toMatch(/\/opengraph-image$/);
       if (route.path.startsWith("/projects/")) {
         expect(ogImage && pathOf(ogImage), route.path).toBe(`${route.path}/opengraph-image`);
+      } else if (route.path.startsWith("/how-this-was-built")) {
+        // The build story's card, which every log page below it shares.
+        expect(ogImage && pathOf(ogImage), route.path).toBe("/how-this-was-built/opengraph-image");
+      } else {
+        expect(ogImage && pathOf(ogImage), route.path).toBe("/opengraph-image");
       }
       for (const [other, t] of titles) expect(t, `${route.path} vs ${other}`).not.toBe(title);
       for (const [other, d] of descriptions) {
