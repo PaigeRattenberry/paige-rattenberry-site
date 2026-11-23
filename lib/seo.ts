@@ -10,9 +10,13 @@ import { absoluteUrl } from "./site";
  * replaces the parent's whole, which would drop the Open Graph image the root
  * app/opengraph-image.tsx provides to every page below it. That is also why there is no
  * `og:url`: setting `openGraph.url` here (2026-11-23) cost 26 of the 32 pages their image, the
- * build-log pages included, so only pages with their own opengraph-image.tsx kept one.
+ * build-log pages included, so only pages with their own opengraph-image.tsx kept one. The
+ * same shallow merge would drop the layout's Search Console `verification` tag, so the type
+ * refuses both keys from a page.
  */
-export function canonical(path: string, meta: Metadata = {}): Metadata {
+export type PageMetadata = Omit<Metadata, "openGraph" | "verification">;
+
+export function canonical(path: string, meta: PageMetadata = {}): Metadata {
   return { ...meta, alternates: { ...meta.alternates, canonical: path } };
 }
 

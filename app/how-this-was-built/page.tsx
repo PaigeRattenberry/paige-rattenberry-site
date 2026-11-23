@@ -19,7 +19,7 @@ import { renderMarkdown, resolveRepositoryLink } from "@/lib/mdx";
 import { canonical } from "@/lib/seo";
 
 export const metadata: Metadata = canonical("/how-this-was-built", {
-  title: "How this site was built",
+  title: buildStory.copy.title,
   description: buildStory.copy.description,
 });
 
@@ -87,7 +87,7 @@ export default async function HowThisWasBuiltPage() {
 
   return (
     <>
-      <PageHeader title="How this site was built" lede={buildStory.copy.lede} />
+      <PageHeader title={buildStory.copy.title} lede={buildStory.copy.lede} />
 
       <section className="max-w-content mx-auto px-5 sm:px-8" aria-labelledby="who-did-what">
         <h2 id="who-did-what" className={h2}>

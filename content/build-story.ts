@@ -61,6 +61,7 @@ export const buildStory: BuildStory = {
   },
 
   copy: {
+    title: "How this site was built",
     description:
       "Who did what in building this site with Claude Code: the plan, a build log per session, a snapshot of the pre-launch history, what the AI got wrong and which check caught it, and StimMap3D as case study one.",
     lede: "Claude Code wrote this site's code, tests and build logs, one session and one reviewed pull request at a time; Codex implemented one review follow-up. Paige made the decisions and merged every pull request. This page is the record: who did what, the plan, what went wrong and what caught it, and a log for every session.",

@@ -574,6 +574,8 @@ export const BuildStorySchema = z.strictObject({
   }),
   /** The page's own sentences: its lede and each section's introduction. */
   copy: z.strictObject({
+    /** The page's heading and title, which its Open Graph card also draws. */
+    title: z.string().min(1),
     /** The page's meta description. */
     description: z.string().min(1),
     lede: z.string().min(1),

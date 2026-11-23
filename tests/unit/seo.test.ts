@@ -11,11 +11,21 @@ describe("canonical", () => {
   });
 
   // Segments merge shallowly: a page that sets either key replaces the layout's whole value,
-  // which drops the inherited Open Graph image or the Search Console verification tag.
-  it("sets neither openGraph nor verification, so the layout's reach every page", () => {
+  // which drops the inherited Open Graph image or the Search Console verification tag. This
+  // checks canonical()'s own output; the type keeps a page from passing either key in (the
+  // directives below fail `npm run typecheck` if it stops), and seo.spec.ts checks the
+  // layout's og fields on every built page.
+  it("adds neither openGraph nor verification itself", () => {
     const meta = canonical("/projects", { title: "Projects" });
     expect(meta).not.toHaveProperty("openGraph");
     expect(meta).not.toHaveProperty("verification");
+  });
+
+  it("refuses openGraph and verification from a page at the type level", () => {
+    // @ts-expect-error a page's openGraph would replace the layout's, image included
+    canonical("/x", { openGraph: { url: "/x" } });
+    // @ts-expect-error a page's verification would replace the layout's Search Console tag
+    canonical("/x", { verification: { google: "token" } });
   });
 });
 

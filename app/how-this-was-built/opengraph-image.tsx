@@ -4,9 +4,9 @@ import { buildStory, profile } from "@/lib/content/load";
 import { OG_SIZE, OgCard } from "@/lib/og/card";
 import { ogFonts } from "@/lib/og/fonts";
 
-const title = "How this site was built";
+const { title, ogCard } = buildStory.copy;
 
-export const alt = `${title}: ${buildStory.copy.ogCard}`;
+export const alt = `${title}. ${ogCard}`;
 export const size = OG_SIZE;
 export const contentType = "image/png";
 
@@ -16,8 +16,8 @@ export const contentType = "image/png";
  * synthesis's bound cannot travel with a picture, and no StimMap3D, so no disclaimer (gate c).
  */
 export default async function Image() {
-  return new ImageResponse(
-    <OgCard kicker={profile.name} title={title} description={buildStory.copy.ogCard} />,
-    { ...size, fonts: await ogFonts() },
-  );
+  return new ImageResponse(<OgCard kicker={profile.name} title={title} description={ogCard} />, {
+    ...size,
+    fonts: await ogFonts(),
+  });
 }
