@@ -90,7 +90,8 @@ const fontVariables = [
 /**
  * Site-wide metadata (DESIGN §5.5). `metadataBase` makes every relative URL below and in the
  * pages absolute; the Open Graph image comes from app/opengraph-image.tsx (and the per-project
- * one from app/projects/[slug]/opengraph-image.tsx), which Next wires in by file convention.
+ * one from app/projects/[slug]/opengraph-image.tsx, the build story's from
+ * app/how-this-was-built/opengraph-image.tsx), which Next wires in by file convention.
  * Twitter falls back to the Open Graph title, description and image; only the card type is
  * set here. Each page sets its own title and description.
  */

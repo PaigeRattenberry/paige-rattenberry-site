@@ -1,6 +1,33 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { jsonLdHtml } from "@/lib/seo";
+import { canonical, jsonLdHtml } from "@/lib/seo";
+
+describe("canonical", () => {
+  it("sets the canonical link to the bare path and keeps the page's own fields", () => {
+    const meta = canonical("/about", { title: "About", description: "About Paige" });
+    expect(meta.title).toBe("About");
+    expect(meta.description).toBe("About Paige");
+    expect(meta.alternates?.canonical).toBe("/about");
+  });
+
+  // Segments merge shallowly: a page that sets either key replaces the layout's whole value,
+  // which drops the inherited Open Graph image or the Search Console verification tag. This
+  // checks canonical()'s own output; the type keeps a page from passing either key in (the
+  // directives below fail `npm run typecheck` if it stops), and seo.spec.ts checks the
+  // layout's og fields on every built page.
+  it("adds neither openGraph nor verification itself", () => {
+    const meta = canonical("/projects", { title: "Projects" });
+    expect(meta).not.toHaveProperty("openGraph");
+    expect(meta).not.toHaveProperty("verification");
+  });
+
+  it("refuses openGraph and verification from a page at the type level", () => {
+    // @ts-expect-error a page's openGraph would replace the layout's, image included
+    canonical("/x", { openGraph: { url: "/x" } });
+    // @ts-expect-error a page's verification would replace the layout's Search Console tag
+    canonical("/x", { verification: { google: "token" } });
+  });
+});
 
 describe("jsonLdHtml", () => {
   it("escapes every < so a value cannot close the script element", () => {

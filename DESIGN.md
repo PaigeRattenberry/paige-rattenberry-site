@@ -378,6 +378,8 @@ relying on prebuild; direct next build does not run npm lifecycle hooks.
 - `metadataBase` from `NEXT_PUBLIC_SITE_URL`; per-page `title`/`description`; `app/sitemap.ts`,
   `app/robots.ts`; Open Graph + Twitter cards via `opengraph-image.tsx` (root and per project/research
   page) using `next/og` `ImageResponse` in the site's typography; JSON-LD `Person` on the home page.
+  **Amended 2026-11-23 (requested by Paige):** `/how-this-was-built` has its own card, which its log
+  pages share, with no count on it.
 
 ### 5.6 Build stats (a committed snapshot)
 - **Amended 2026-09-30 (S0-G, decision D6).** The public repository begins at launch with one seed
